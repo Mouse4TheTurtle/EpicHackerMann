@@ -67,6 +67,10 @@ public class Board
             }
         }
 
+        chessBoard[7][2].setLocation(7,2);
+        chessBoard[7][6].setLocation(7,6);
+        System.out.println("" + chessBoard[7][2].getRow() + " " + chessBoard[7][2].getCol());
+        System.out.println("" + chessBoard[7][6].getRow() + " " + chessBoard[7][6].getCol());
     }
 
     public boolean validMove(Piece x, Movement m)
@@ -80,7 +84,24 @@ public class Board
             {
                 System.out.println("Trying Possible Move: " + x.pieceMovement()[i].getMovementRow() + " " + x.pieceMovement()[i].getMovementCol());
                 if (m.getMovementCol() == x.pieceMovement()[i].getMovementCol() && m.getMovementRow() == x.pieceMovement()[i].getMovementRow())
-                {
+                {/*
+                    if (m.getMovementCol()==0)
+                    {
+
+                    }
+                    else if (m.getMovementRow()==0)
+                    {
+
+                    }
+                    else if(x.getPieceName().equals("Knight"))
+                    {
+                        System.out.println("Valid Move.");
+                        return true;
+                    }
+                    else if (validMove(x,new Movement(m.getMovementRow()-1,m.getMovementCol()-1)))
+                    {
+
+                    }*/
                     System.out.println("Valid Move.");
                     return true;
                 }

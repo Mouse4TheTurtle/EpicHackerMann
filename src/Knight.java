@@ -40,7 +40,15 @@ public class Knight extends Piece
     {
         return pieceCol;
     }
-    public void setLocation(int row, int col) {
+
+
+    public int getRow()
+    {
+        return pieceRow;
+    }
+
+    public void setLocation(int row, int col)
+    {
         pieceCol = col;
         pieceRow = row;
     }
