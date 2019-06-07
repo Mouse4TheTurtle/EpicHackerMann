@@ -45,4 +45,9 @@ public class Empty extends Piece
     {
         color = x;
     }
+    public void readPieceValue()
+    {
+        DataTransfer data = new DataTransfer(null,null);
+        pieceValue = data.readPtVal(this);
+    }
 }

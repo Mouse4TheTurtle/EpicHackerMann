@@ -53,6 +53,7 @@ public class Game {
                 for (Piece b : i) {
                     a.readPtVal(b);
                     a.writePieceData(b);
+                    b.readPieceValue();
                 }
 
             }
