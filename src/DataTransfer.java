@@ -28,48 +28,6 @@ public class DataTransfer
         }
     }
 
-    public void write(String dataType, String write)
-    {
-        String newContent = "";
-        String oldContent = "";
-        BufferedReader reader = null;
-        FileWriter writer = null;
-
-        try
-        {
-                reader = new BufferedReader(new FileReader(dataOutput));
-                String line = reader.readLine();
-
-                while (line != null)
-                {
-                    oldContent = oldContent + line + System.lineSeparator();
-
-                    line = reader.readLine();
-                }
-
-
-                writer = new FileWriter(dataOutput);
-
-                writer.write(newContent);
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-            finally
-            {
-                try
-                {
-                    reader.close();
-                    writer.close();
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
-            }
-        }
-
     public void writePieceData(Piece piece)
     {
         double pieceValue = piece.getPieceValue();
