@@ -9,7 +9,8 @@ public class Pawn extends Piece
     private boolean firstMove = true;
 
     public Movement[] pieceMovement()
-    {
+    {/*
+
         if (firstMove=true)
         {
             movements = new Movement[2];
@@ -18,10 +19,13 @@ public class Pawn extends Piece
         }
 
         if (firstMove=false)
-        {
-            movements = new Movement[1];
+        {*/
+        movements = new Movement[1];
+        if(color)
+            movements[0] = new Movement(-1,0);
+        else
             movements[0] = new Movement(1,0);
-        }
+       // }
 
         return movements;
     }
