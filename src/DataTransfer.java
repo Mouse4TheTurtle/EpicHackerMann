@@ -98,6 +98,7 @@ public class DataTransfer
             }
         }
     }
+
     public Movement readMove(String input)
     {
         int col = 0;
@@ -131,16 +132,25 @@ public class DataTransfer
         return new Movement(row,col);
     }
 
-    public double readPtVal(String input)
+    public double readPtVal(Piece piece)
     {
         double value = 0;
-
+        boolean color = piece.getColor();
+        String colorH = "";
+        if (color)
+        {
+            colorH = "White";
+        }
+        else
+        {
+            colorH = "Black";
+        }
         BufferedReader reader = null;
         try
         {
-            reader = new BufferedReader(new FileReader(dataInput));
+            reader = new BufferedReader(new FileReader(workingDirectory + "\\data\\PieceData\\" +colorH+"\\ValueInput\\" + piece.getPieceName()));
             String line = reader.readLine();
-            value = Integer.parseInt(line);
+            value = Double.parseDouble(line);
         }
         catch (IOException e)
         {
@@ -168,6 +178,7 @@ public class DataTransfer
     {
         return "" + workingDirectory + "\\" + readFrom;
     }
+
     public void writePieceMovements(Piece piece)
     {
         Movement[] movements = piece.pieceMovement();

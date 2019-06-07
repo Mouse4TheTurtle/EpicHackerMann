@@ -51,8 +51,8 @@ public class Game {
             DataTransfer a = new DataTransfer(null, null);
             for (Piece[] i : gamer.getBoard()) {
                 for (Piece b : i) {
+                    a.readPtVal(b);
                     a.writePieceData(b);
-                    a.writePieceMovements(b);
                 }
 
             }
