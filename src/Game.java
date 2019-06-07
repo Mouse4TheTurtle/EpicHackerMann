@@ -6,13 +6,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Scanner;
 
-public class Game
-{
+public class Game {
     public static void main(String[] args)
     {
         Board gamer = new Board();
-        //System.out.println(gamer);
-/*
+        /*
         JFrame frame = new JFrame("Chess Board");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(new Panel());
@@ -23,18 +21,16 @@ public class Game
         JLabel imageLabel = new JLabel(image);
         frame.add(imageLabel);
         frame.setVisible(true);
-        */
+*/
 
-        //gamer.movePiece(gamer.getBoard()[7][1],new Movement(2,1));
-        //gamer.movePiece(gamer.getBoard()[6][5],new Movement(-1,0));
-        //System.out.println(gamer);
         String response = "";
+
         int x;
         int y;
         int w;
         int z;
-        while (!response.toLowerCase().equals("exit"))
-        {
+
+        while (!response.toLowerCase().equals("exit")) {
             Scanner keyboard = new Scanner(System.in);
             System.out.println(gamer);
             System.out.println("\nMove which piece? ");
@@ -48,17 +44,20 @@ public class Game
             System.out.println("Move on the horizontal axis by? ");
             z = keyboard.nextInt();
 
-            gamer.movePiece(gamer.getBoard()[x][y], new Movement(w,z));
+            gamer.movePiece(gamer.getBoard()[x][y], new Movement(w, z));
 
             System.out.println(gamer);
 
-            System.out.println("Restart, exit, or continue?");
-            response = keyboard.nextLine();
-            if(response.toLowerCase().equals("restart"))
-            {
-                gamer.resetBoard();
+            DataTransfer a = new DataTransfer(null, null);
+            for (Piece[] i : gamer.getBoard()) {
+                for (Piece b : i) {
+                    a.writePieceData(b);
+                    a.writePieceMovements(b);
+                }
+
             }
 
         }
     }
 }
+

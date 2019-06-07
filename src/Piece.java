@@ -46,4 +46,9 @@ abstract class Piece
         pieceCol = col;
         pieceRow = row;
     }
+    public void readPieceValue()
+    {
+        DataTransfer data = new DataTransfer(null,null);
+        pieceValue = data.readPtVal(data.getDataInput());
+    }
 }

@@ -56,4 +56,9 @@ public class Knight extends Piece
     {
         color = x;
     }
+    public void readPieceValue()
+    {
+        DataTransfer data = new DataTransfer(null,null);
+        pieceValue = data.readPtVal(data.getDataInput());
+    }
 }

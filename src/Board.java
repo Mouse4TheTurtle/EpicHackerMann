@@ -111,7 +111,6 @@ public class Board {
                         }
                         System.out.println("Illegal Move");
                         return false;
-
                     }
                     if (m.getMovementRow() == 0) {
                         Movement tempMov = new Movement(0, m.getMovementCol() + checkCol);
@@ -133,7 +132,6 @@ public class Board {
                         return false;
                     }
                 }
-
             }
         }
         System.out.println("Illegal Move");
