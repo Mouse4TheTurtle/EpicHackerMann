@@ -65,7 +65,7 @@ public class Board {
             System.out.println("You can't move a piece to its own spot!");
             return true;
         }
-        if (checkingIfBlocked&&chessBoard[x.getRow()+m.getMovementRow()][x.getCol()+m.getMovementCol()].getPieceName().equals("Empty"))
+        if (checkingIfBlocked&&!chessBoard[x.getRow()+m.getMovementRow()][x.getCol()+m.getMovementCol()].getPieceName().equals("Empty"))
         {
             System.out.println("Blocked by a piece!");
             return false;
@@ -73,7 +73,7 @@ public class Board {
         if (x.getRow() + m.getMovementRow() >= 0 && x.getCol() + m.getMovementCol() >= 0 && x.getRow() + m.getMovementRow() < 8 && x.getCol() + m.getMovementCol() < 8) {
             System.out.println("Movement  " + m.getMovementRow() + " " + m.getMovementCol());
             System.out.println("By Piece At: " + x.getRow() + " " + x.getCol());
-            if(chessBoard[x.getRow()+m.getMovementRow()][x.getCol()+m.getMovementCol()].getColor()==x.getColor())
+            if(chessBoard[x.getRow()+m.getMovementRow()][x.getCol()+m.getMovementCol()].getColor()==x.getColor()&&!chessBoard[x.getRow()+m.getMovementRow()][x.getCol()+m.getMovementCol()].getPieceName().equals("Empty"))
             {
                 System.out.println("Can not take piece of same Color!");
                 return false;
@@ -89,23 +89,22 @@ public class Board {
                         System.out.println("Valid Move.");
                         return true;
                     }
-                    checkingIfBlocked = true;
-                    if (m.getMovementRow() > x.getRow()) {
+                    ;
+                    if (m.getMovementRow()+x.getRow() > x.getRow()) {
                         checkRow = -1;
                     }
-                    if (m.getMovementRow() < x.getRow()) {
+                    if (m.getMovementRow()+x.getRow() < x.getRow()) {
                         checkRow = 1;
                     }
-                    if (m.getMovementCol() > x.getCol()) {
+                    if (m.getMovementCol()+x.getCol() > x.getCol()) {
                         checkCol = -1;
                     }
-                    if (m.getMovementCol() < x.getCol()) {
+                    if (m.getMovementCol()+x.getCol() < x.getCol()) {
                         checkCol = 1;
                     }
                     if (m.getMovementCol() == 0) {
                         Movement tempMov = new Movement(m.getMovementRow() + checkRow, 0);
-
-
+                        checkingIfBlocked = true;
                         if (validMove(x, tempMov)) {
                             System.out.println("Valid Move.");
                             return true;
@@ -116,6 +115,7 @@ public class Board {
                     }
                     if (m.getMovementRow() == 0) {
                         Movement tempMov = new Movement(0, m.getMovementCol() + checkCol);
+                        checkingIfBlocked = true;
                         if (validMove(x, tempMov)) {
                             System.out.println("Valid Move.");
                             return true;
@@ -124,6 +124,7 @@ public class Board {
                         return false;
                     } else {
                         Movement tempMov = new Movement(m.getMovementRow() + checkRow, m.getMovementCol() + checkCol);
+                        checkingIfBlocked = true;
                         if (validMove(x, tempMov)) {
                             System.out.println("Valid Move.");
                             return true;
