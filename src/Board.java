@@ -202,7 +202,6 @@ public class Board {
                             if (attackerRow >= 0 && attackerCol >= 0 && attackerRow < 8 && attackerCol < 8) {
                                 if (chessBoard[attackerRow][attackerCol].getPieceName().equals(b.getPieceName())&&chessBoard[attackerRow][attackerCol].getColor()!=b.getColor())
                                 {
-
                                     System.out.println("In check!");
                                     return true;
                                 }
