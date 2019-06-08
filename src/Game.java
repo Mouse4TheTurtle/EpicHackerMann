@@ -58,8 +58,16 @@ public class Game {
 
                 x = keyboard.nextInt();
 
-                if(x>3)
-                    Math.abs(x-8);
+                if(x==8)
+                    x=0;
+                else if(x==7)
+                    x=1;
+                else if (x==6)
+                    x=2;
+                else if (x==5)
+                    x=3;
+                else if (x==4)
+                    x=4;
                 else if (x==3)
                     x=5;
                 else if (x==2)

@@ -152,25 +152,27 @@ public class Board {
         boolean attackingColor = a.getColor();
         System.out.println("Attempted Take By Piece At " + a.getRow() + " " + a.getCol() + " to " + d.getRow() + " " + d.getCol());
 
-
         if (defendingColor != attackingColor || d.getPieceName().equals("Empty")) {
             System.out.println("Take Success");
 
-            int tempCol = a.getCol();
-            int tempRow = a.getRow();
+            int attCol = a.getCol();
+            int attRow = a.getRow();
+            int defCol = d.getCol();
+            int defRow = d.getRow();
 
-            chessBoard[d.getRow()][d.getCol()] = a;
-            a.setLocation(d.getRow(), d.getCol());
-
-            chessBoard[tempRow][tempCol] = new Empty();
+            chessBoard[defRow][defCol] = a;
+            chessBoard[defRow][defCol].setLocation(defRow, defCol);
+            chessBoard[attRow][attCol] = new Empty();
+            System.out.println(d.getPieceName());
 
             for (Piece[] i:chessBoard) {
                 for (Piece h:i) {
                     if(inCheck(h)) {
                         System.out.println("Can not put King in check!");
-                        chessBoard[a.getCol()][a.getCol()] = d;
-                        d.setLocation(a.getRow(), a.getCol());
-                        chessBoard[tempRow][tempCol] = a;
+                        chessBoard[attRow][attCol] = a;
+                        chessBoard[attRow][attCol].setLocation(attRow,attCol);
+                        chessBoard[defRow][defCol] = new Empty();
+
                     }
                 }
             }
@@ -198,8 +200,10 @@ public class Board {
                             attackerRow = h.getRow() + move.getMovementRow();
                             attackerCol = h.getCol() + move.getMovementCol();
                             if (attackerRow >= 0 && attackerCol >= 0 && attackerRow < 8 && attackerCol < 8) {
-                                if (chessBoard[attackerRow][attackerCol] == b) ;
+                                if (chessBoard[attackerRow][attackerCol].getPieceName().equals(b.getPieceName())&&chessBoard[attackerRow][attackerCol].getColor()!=b.getColor())
                                 {
+
+                                    System.out.println("In check!");
                                     return true;
                                 }
                             }
