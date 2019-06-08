@@ -60,17 +60,18 @@ public class Board {
     }
 
     public boolean validMove(Piece x, Movement m) {
-        if (m.getMovementRow()==0&&m.getMovementCol()==0)
-        {
-            System.out.println("You can't move a piece to its own spot!");
-            return true;
-        }
-        if (checkingIfBlocked&&!chessBoard[x.getRow()+m.getMovementRow()][x.getCol()+m.getMovementCol()].getPieceName().equals("Empty"))
-        {
-            System.out.println("Blocked by a piece!");
-            return false;
-        }
+
         if (x.getRow() + m.getMovementRow() >= 0 && x.getCol() + m.getMovementCol() >= 0 && x.getRow() + m.getMovementRow() < 8 && x.getCol() + m.getMovementCol() < 8) {
+            if (m.getMovementRow()==0&&m.getMovementCol()==0)
+            {
+                System.out.println("You can't move a piece to its own spot!");
+                return true;
+            }
+            if (checkingIfBlocked&&!chessBoard[x.getRow()+m.getMovementRow()][x.getCol()+m.getMovementCol()].getPieceName().equals("Empty"))
+            {
+                System.out.println("Blocked by a piece!");
+                return false;
+            }
             System.out.println("Movement  " + m.getMovementRow() + " " + m.getMovementCol());
             System.out.println("By Piece At: " + x.getRow() + " " + x.getCol());
             if(chessBoard[x.getRow()+m.getMovementRow()][x.getCol()+m.getMovementCol()].getColor()==x.getColor()&&!chessBoard[x.getRow()+m.getMovementRow()][x.getCol()+m.getMovementCol()].getPieceName().equals("Empty"))
@@ -106,7 +107,7 @@ public class Board {
                         Movement tempMov = new Movement(m.getMovementRow() + checkRow, 0);
                         checkingIfBlocked = true;
                         if (validMove(x, tempMov)) {
-                            System.out.println("Valid Move.");
+                                System.out.println("Valid Move.");
                             return true;
                         }
                         System.out.println("Illegal Move");
@@ -189,12 +190,16 @@ public class Board {
 
     public String toString() {
         String output = "";
+        int j = 8;
         for (Piece[] i : chessBoard) {
+            output += j + " ";
             for (Piece h : i) {
                 output += h.getPieceName() + " ";
             }
             output += "\n";
+            j--;
         }
+        output += "    A     B     C     D     E     F     G     H";
         return output;
     }
 }
