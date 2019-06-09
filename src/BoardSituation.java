@@ -41,7 +41,8 @@ public class BoardSituation {
         String output = "";
 
         output += board.toString();
-        System.out.println("This board gives " + piece + " a value of " + value);
+
+        System.out.println("This board gives " + piece.getPieceName() + " a value of " + value);
 
         return output;
     }

@@ -158,7 +158,7 @@ public class DataTransfer {
             System.out.println(value);
             int row = 0;
             int col = 0;
-            String temp = new String();
+            String temp = "";
 
             for (int i = 0; i < 8; i++) {
                 line = reader.readLine();
@@ -166,7 +166,7 @@ public class DataTransfer {
                 System.out.println("Reading line: " + i);
                 col = 0;
                 for (int j = 0; j < h.length(); j++) {
-                    if(h.length()>6) {
+                    //if(h.length()>6) {
                         System.out.println("Reading Piece: " + col);
                         if (h.substring(h.indexOf("|") + 1).indexOf("B") == 0) {
                             System.out.println("Piece is Black");
@@ -177,22 +177,25 @@ public class DataTransfer {
                         }
 
                         temp = h.substring(h.indexOf("|") + 1);
+                        System.out.println("Temp1: " + temp);
                         temp = temp.substring(1, temp.indexOf("|"));
-                        System.out.println(temp);
+                        System.out.println("Temp2: " + temp);
 
                         for (String name : pieceNames) {
                             if (temp.equals(name)) {
                                 System.out.println("Piece is: " + name);
-                                h = h.substring(3 + name.length());
-                                piece = readPieceData(pieceColor, name, i, col);
+                                System.out.println("h1: " + h);
+                                h = h.substring(2+temp.length());
+                                System.out.println("h2: " + h);
+                                piece = makePieceFromData(pieceColor, name, i, col);
                             }
                         }
                         board.setPiece(piece);
                         col++;
 
-                    }
-                    else
-                        j=h.length()+1;
+                    //}
+                    //else
+                        //j=h.length()+1;
                 }
                 row++;
             }
@@ -309,7 +312,7 @@ public class DataTransfer {
         System.out.println("Done Writing");
     }
 
-    public Piece readPieceData(boolean color, String name) {
+    public Piece makePieceFromData(boolean color, String name) {
         Piece piece = new Empty();
         double value = 0;
         int row = 0;
@@ -363,7 +366,7 @@ public class DataTransfer {
         return piece;
     }
 
-    public Piece readPieceData(boolean color, String name, int row, int col) {
+    public Piece makePieceFromData(boolean color, String name, int row, int col) {
         Piece piece = new Empty();
         double value = 0;
 
