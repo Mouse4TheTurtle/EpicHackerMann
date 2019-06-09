@@ -1,16 +1,30 @@
-public class boardSituation {
+public class BoardSituation {
 
-    Board board;
+    private Board board;
+    private double value;
 
-    public boardSituation()
+    public BoardSituation()
     {
         board = new Board();
+        value = -1;
     }
 
-    public void setBoardSituation()
+    public void setSituationBoard(Board board1)
     {
-        DataTransfer data = new DataTransfer(null, null);
-        data.readBoardSituation();
+        board.setBoard(board1);
     }
 
+    public void setSituationValue(double value1) {
+        value = value1;
+    }
+
+    public double getPieceValueData()
+    {
+        return value;
+    }
+
+    public Board getBoardData()
+    {
+        return board;
+    }
 }

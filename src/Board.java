@@ -216,10 +216,10 @@ public class Board {
     public double getAdvantage() {
         for (Piece[] a : chessBoard) {
             for (Piece b : a) {
-                if (b.valuedSituation()){
+                //if () {
 
 
-                }
+                //}
             }
         }
         return advantage;
@@ -227,6 +227,18 @@ public class Board {
 
     public Piece[][] getBoard() {
         return chessBoard;
+    }
+
+    public void setBoard(Board board){
+        for (int i = 0; i < chessBoard.length; i++) {
+            for (int j = 0; j < chessBoard[i].length; j++) {
+                setPiece(board.getBoard()[i][j]);
+            }
+        }
+    }
+
+    public void setPiece(Piece h){
+        chessBoard[h.getRow()][h.getCol()]=h;
     }
 
     public String toString() {
