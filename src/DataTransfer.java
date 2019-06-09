@@ -26,6 +26,13 @@ public class DataTransfer {
         } catch (IOException e) {
             System.err.println("Error");
         }
+        pieceNames[0]="Rook";
+        pieceNames[1]="King";
+        pieceNames[2]="Queen";
+        pieceNames[3]="Empty";
+        pieceNames[4]="Bishop";
+        pieceNames[5]="Knight";
+        pieceNames[6]="Pawn";
     }
 
     public void writePieceData(Piece piece) {
@@ -151,38 +158,54 @@ public class DataTransfer {
 
             int row = 0;
             int col = 0;
-            while (line != null) {
+            String temp = new String();
+
+            for (int i = 0; i < board.getBoard().length; i++) {
                 line = reader.readLine();
                 String h = line;
-
-                for (int i = 0; i < h.length(); i++) {
-                    if (h.substring(h.indexOf("|") + 1).indexOf("B") == 0) {
-                        pieceColor = false;
-                    } else {
-                        pieceColor = true;
-                    }
-                    for (String a : pieceNames) {
-                        if (h.substring(h.indexOf("|")).substring(0, h.indexOf("|")).contains(a)) {
-                            h = h.substring(3 + a.length());
-                            piece = readPieceData(pieceColor, a);
+                System.out.println("Reading line: " + i);
+                for (int j = 0; j < h.length(); j++) {
+                    if(h.length()>10) {
+                        if (h.substring(h.indexOf("|") + 1).indexOf("B") == 0) {
+                            System.out.println("Piece is Black");
+                            pieceColor = false;
+                        } else {
+                            System.out.println("Piece is White");
+                            pieceColor = true;
                         }
-                    }
 
-                    piece.setLocation(row, col);
-                    board.setPiece(piece);
-                    col++;
+                        for (String name : pieceNames) {
+                            System.out.println("Reading Piece: " + col);
+                            temp = h.substring(h.indexOf("|") + 1);
+                            temp = temp.substring(1, temp.indexOf("|"));
+                            System.out.println(temp);
+                            if (temp.equals(name)) {
+                                System.out.println("Piece is: " + name);
+                                h = h.substring(3 + name.length());
+                                piece = readPieceData(pieceColor, name);
+                            }
+                        }
+
+                        piece.setLocation(i, col);
+                        board.setPiece(piece);
+                        col++;
+
+                    }
+                    else
+                        j=h.length()+1;
                 }
                 row++;
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error while reading.");
         } finally {
             try {
                 reader.close();
             } catch (IOException e) {
-                e.printStackTrace();
+                System.out.println("Error while closing reader");
             }
         }
+        System.out.println("Done Reading");
         return situation;
     }
 
@@ -227,8 +250,9 @@ public class DataTransfer {
 
             w.close();
         } catch (IOException e) {
-            System.err.println("Error");
+            System.err.println("Error while writing");
         }
+        System.out.println("Done Writing");
     }
 
     public Piece readPieceData(boolean color, String name) {
@@ -245,7 +269,7 @@ public class DataTransfer {
         }
         BufferedReader reader = null;
         try {
-            reader = new BufferedReader(new FileReader(workingDirectory + "\\data\\Board\\BoardSituations\\" + colorH + "\\" + name + ".txt"));
+            reader = new BufferedReader(new FileReader(workingDirectory + "\\data\\PieceData\\" + colorH + "\\" + name + ".txt"));
             String line = reader.readLine();
             value = Double.parseDouble(line);
             line = reader.readLine();
