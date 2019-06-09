@@ -1,4 +1,5 @@
 import java.io.*;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -194,22 +195,29 @@ public class DataTransfer {
             colorH = "Black";
         }
         try {
-            for (int i = 0; i < Integer.MAX_VALUE; i++) {
+            for (int i = 0; i < 99999; i++) {
+                System.out.println("Try number " +i);
                 number=i;
-                File temp = new File(workingDirectory + "\\data\\Board\\BoardSituations\\" + colorH + "\\" + piece.getPieceName() + "\\" + i + ".txt");
+                if(new File (workingDirectory + "\\data\\Board\\BoardSituations\\" + colorH + "\\" + piece.getPieceName() + "\\" + number + ".txt").exists())
+                {
+                }
+                else
+                    i=99999;
             }
         } catch (IndexOutOfBoundsException e) {
+            System.out.println("Error creating file.");
         }
         try {
+            new File(workingDirectory + "\\data\\Board\\BoardSituations\\" + colorH + "\\" + piece.getPieceName()).mkdirs();
             FileOutputStream is = new FileOutputStream(workingDirectory + "\\data\\Board\\BoardSituations\\" + colorH + "\\" + piece.getPieceName() + "\\" + number + ".txt");
             OutputStreamWriter osw = new OutputStreamWriter(is);
             Writer w = new BufferedWriter(osw);
-            w.write(""+value);
+            w.write(""+value+"\n");
             for (Piece[] a : board.getBoard()) {
                 for (Piece b : a) {
                     w.write("|"+colorH.substring(0,1)+piece.getPieceName());
                 }
-                w.write("|");
+                w.write("|\n");
             }
 
             w.close();
