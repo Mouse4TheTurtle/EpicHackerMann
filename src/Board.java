@@ -244,10 +244,17 @@ public class Board {
     public String toString() {
         String output = "";
         int j = 8;
+        String colorH = "";
         for (Piece[] i : chessBoard) {
             output += j + " ";
             for (Piece h : i) {
-                output += h.getPieceName() + " ";
+
+                if (h.getColor()&&!h.getPieceName().equals("Empty")) {
+                    colorH = "W";
+                } else if(!h.getColor()&&!h.getPieceName().equals("Empty")){
+                    colorH = "B";
+                }
+                output += colorH + h.getPieceName() + " ";
             }
             output += "\n";
             j--;

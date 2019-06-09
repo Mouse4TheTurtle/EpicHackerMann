@@ -8,11 +8,6 @@ public class Game {
         Scanner keyboard = new Scanner(System.in);
         DataTransfer data = new DataTransfer(null, null);
 
-        for (Piece[] h : gamer.getBoard()) {
-            for (Piece i : h) {
-                i.setValuedSituations();
-            }
-        }
         int x;
         int y;
         int w;
@@ -20,6 +15,9 @@ public class Game {
 
         System.out.println("Use manual control? ");
         if (keyboard.nextLine().equals("yes")) {
+
+            System.out.println("Setting up game...");
+
             while (!response.toLowerCase().equals("exit")) {
 
                 System.out.println(gamer);
@@ -100,7 +98,15 @@ public class Game {
         }
         else
         {
-            //for interaction with bot and stuff
+            System.out.println("Setting up game... ");
+
+            for (Piece[] h : gamer.getBoard()) {
+                for (Piece i : h) {
+                    i.setValuedSituations();
+                }
+            }
+
+            //bot interactions go here
         }
     }
 }

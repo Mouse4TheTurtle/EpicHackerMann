@@ -26,13 +26,13 @@ public class DataTransfer {
         } catch (IOException e) {
             System.err.println("Error");
         }
-        pieceNames[0]="Rook";
-        pieceNames[1]="King";
-        pieceNames[2]="Queen";
-        pieceNames[3]="Empty";
+        pieceNames[0]="Empty";
+        pieceNames[1]="Pawn";
+        pieceNames[2]="Rook";
+        pieceNames[3]="Knight";
         pieceNames[4]="Bishop";
-        pieceNames[5]="Knight";
-        pieceNames[6]="Pawn";
+        pieceNames[5]="Queen";
+        pieceNames[6]="King";
     }
 
     public void writePieceData(Piece piece) {
@@ -195,18 +195,18 @@ public class DataTransfer {
                 row++;
             }
         } catch (IOException e) {
-            System.out.println("Error while reading.");
+            //System.out.println("Error while reading.");
         } finally {
             try {
                 reader.close();
             } catch (IOException e) {
-                System.out.println("Error while closing reader");
+                //System.out.println("Error while closing reader");
             }
         }
         situation.setSituationPiece(piece);
         situation.setSituationBoard(board);
         situation.setSituationValue(value);
-        System.out.println("Done Reading");
+        //System.out.println("Done Reading");
         return situation;
     }
 
