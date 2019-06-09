@@ -215,7 +215,12 @@ public class DataTransfer {
             w.write(""+value+"\n");
             for (Piece[] a : board.getBoard()) {
                 for (Piece b : a) {
-                    w.write("|"+colorH.substring(0,1)+piece.getPieceName());
+                    if (b.getColor()) {
+                        colorH = "White";
+                    } else {
+                        colorH = "Black";
+                    }
+                    w.write("|"+colorH.substring(0,1)+b.getPieceName());
                 }
                 w.write("|\n");
             }
