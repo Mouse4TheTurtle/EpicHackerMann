@@ -186,7 +186,6 @@ public class Board {
         } else {
             System.out.println("Take Failed");
         }
-
     }
 
     public boolean inCheck(Piece h) {
@@ -215,6 +214,14 @@ public class Board {
     }
 
     public double getAdvantage() {
+        for (Piece[] a : chessBoard) {
+            for (Piece b : a) {
+                if (b.valuedSituation()){
+
+
+                }
+            }
+        }
         return advantage;
     }
 

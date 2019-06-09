@@ -1,5 +1,4 @@
-public class Empty extends Piece
-{
+public class Empty extends Piece {
     private double pieceValue = 0;
     private String pieceName = "Empty";
     private boolean color;
@@ -7,10 +6,9 @@ public class Empty extends Piece
     private int pieceCol;
     private int pieceRow;
 
-    public Movement[] pieceMovement()
-    {
+    public Movement[] pieceMovement() {
         movements = new Movement[1];
-        movements[0] = new Movement(0,0);
+        movements[0] = new Movement(0, 0);
 
         return movements;
     }
@@ -19,35 +17,33 @@ public class Empty extends Piece
         return pieceValue;
     }
 
-    public String getPieceName()
-    {
+    public String getPieceName() {
         return pieceName;
     }
 
-    public boolean getColor()
-    {
+    public boolean getColor() {
         return color;
     }
 
-    public int getRow()
-    {
+    public int getRow() {
         return pieceRow;
     }
-    public int getCol()
-    {
+
+    public int getCol() {
         return pieceCol;
     }
+
     public void setLocation(int row, int col) {
         pieceCol = col;
         pieceRow = row;
     }
-    public void setColor(boolean x)
-    {
+
+    public void setColor(boolean x) {
         color = x;
     }
-    public void readPieceValue()
-    {
-        DataTransfer data = new DataTransfer(null,null);
+
+    public void setPieceValue() {
+        DataTransfer data = new DataTransfer(null, null);
         pieceValue = data.readPtVal(this);
     }
 }
