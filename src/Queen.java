@@ -7,27 +7,25 @@ public class Queen extends Piece
     private int pieceCol;
     private int pieceRow;
 
-    public Movement[] pieceMovement()
-    {
+    public Movement[] pieceMovement() {
         movements = new Movement[56];
         int index = 0;
-        for(int i = 0; index<movements.length; i++)
-        {
-            movements[index] = new Movement(0,1+i);
+        for (int i = 0; index < movements.length; i++) {
+            movements[index] = new Movement(0, 1 + i);
             index++;
-            movements[index] = new Movement(0,-1-i);
+            movements[index] = new Movement(0, -1 - i);
             index++;
-            movements[index] = new Movement(1+i,0);
+            movements[index] = new Movement(1 + i, 0);
             index++;
-            movements[index] = new Movement(1+i,1+i);
+            movements[index] = new Movement(1 + i, 1 + i);
             index++;
-            movements[index] = new Movement(1+i,-1-i);
+            movements[index] = new Movement(1 + i, -1 - i);
             index++;
-            movements[index] = new Movement(-1-i,1+i);
+            movements[index] = new Movement(-1 - i, 1 + i);
             index++;
-            movements[index] = new Movement(-1-i,0);
+            movements[index] = new Movement(-1 - i, 0);
             index++;
-            movements[index] = new Movement(-1-i,-1-i);
+            movements[index] = new Movement(-1 - i, -1 - i);
             index++;
 
         }
@@ -52,20 +50,23 @@ public class Queen extends Piece
     {
         return pieceRow;
     }
+
     public int getCol()
     {
         return pieceCol;
     }
+
     public void setLocation(int row, int col) {
         pieceCol = col;
         pieceRow = row;
     }
+
     public void setColor(boolean x)
     {
         color = x;
     }
-    public void readPieceValue()
-    {
+
+    public void setPieceValue() {
         DataTransfer data = new DataTransfer(null,null);
         pieceValue = data.readPtVal(this);
     }

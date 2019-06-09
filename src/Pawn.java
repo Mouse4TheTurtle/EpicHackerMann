@@ -1,5 +1,4 @@
-public class Pawn extends Piece
-{
+public class Pawn extends Piece {
     private double pieceValue = 1;
     private String pieceName = "Pawn";
     private boolean color;
@@ -8,8 +7,7 @@ public class Pawn extends Piece
     private int pieceRow;
     private boolean firstMove = true;
 
-    public Movement[] pieceMovement()
-    {/*
+    public Movement[] pieceMovement() {/*
 
         if (firstMove=true)
         {
@@ -21,11 +19,11 @@ public class Pawn extends Piece
         if (firstMove=false)
         {*/
         movements = new Movement[1];
-        if(color)
-            movements[0] = new Movement(-1,0);
+        if (color)
+            movements[0] = new Movement(-1, 0);
         else
-            movements[0] = new Movement(1,0);
-       // }
+            movements[0] = new Movement(1, 0);
+        // }
 
         return movements;
     }
@@ -34,40 +32,37 @@ public class Pawn extends Piece
         return pieceValue;
     }
 
-    public String getPieceName()
-    {
+    public String getPieceName() {
         return pieceName;
     }
 
-    public boolean getColor()
-    {
+    public boolean getColor() {
         return color;
     }
 
-    public void moved()
-    {
+    public void moved() {
         this.firstMove = false;
     }
 
-    public int getRow()
-    {
+    public int getRow() {
         return pieceRow;
     }
-    public int getCol()
-    {
+
+    public int getCol() {
         return pieceCol;
     }
+
     public void setLocation(int row, int col) {
         pieceCol = col;
         pieceRow = row;
     }
-    public void setColor(boolean x)
-    {
+
+    public void setColor(boolean x) {
         color = x;
     }
-    public void readPieceValue()
-    {
-        DataTransfer data = new DataTransfer(null,null);
+
+    public void setPieceValue() {
+        DataTransfer data = new DataTransfer(null, null);
         pieceValue = data.readPtVal(this);
     }
 }

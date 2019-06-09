@@ -50,7 +50,7 @@ public class Bishop extends Piece {
     {
         color = x;
     }
-    public void readPieceValue()
+    public void setPieceValue()
     {
         DataTransfer data = new DataTransfer(null,null);
         pieceValue = data.readPtVal(this);

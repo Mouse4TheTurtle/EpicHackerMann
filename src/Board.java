@@ -1,6 +1,6 @@
 public class Board {
     private Piece[][] chessBoard;
-    private double advantage = 0.0;
+    private double advantage = 0;
     private boolean checkingIfBlocked = false;
 
     public Board() {
@@ -186,7 +186,6 @@ public class Board {
         } else {
             System.out.println("Take Failed");
         }
-
     }
 
     public boolean inCheck(Piece h) {
@@ -215,7 +214,14 @@ public class Board {
     }
 
     public double getAdvantage() {
+        for (Piece[] a : chessBoard) {
+            for (Piece b : a) {
+                if (b.valuedSituation()){
 
+
+                }
+            }
+        }
         return advantage;
     }
 

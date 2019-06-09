@@ -10,8 +10,7 @@ public class DataTransfer
     private File dataOutput;
     private File dataInput;
 
-    public DataTransfer(String write, String read)
-    {
+    public DataTransfer(String write, String read) {
         writeTo = write;
         readFrom = read;
         dataOutput = new File(workingDirectory + "\\data\\" + writeTo);
@@ -28,8 +27,7 @@ public class DataTransfer
         }
     }
 
-    public void writePieceData(Piece piece)
-    {
+    public void writePieceData(Piece piece) {
         double pieceValue = piece.getPieceValue();
         String pieceName = piece.getPieceName();
         boolean color = piece.getColor();
@@ -57,8 +55,7 @@ public class DataTransfer
         }
     }
 
-    public Movement readMove(String input)
-    {
+    public Movement readMove(String input) {
         int col = 0;
         int row = 0;
 
@@ -90,8 +87,7 @@ public class DataTransfer
         return new Movement(row,col);
     }
 
-    public double readPtVal(Piece piece)
-    {
+    public double readPtVal(Piece piece) {
         double value = 0;
         boolean color = piece.getColor();
         String colorH = "";
@@ -132,13 +128,13 @@ public class DataTransfer
     {
         return "" + workingDirectory + "\\" + writeTo;
     }
+
     public String getDataInput()
     {
         return "" + workingDirectory + "\\" + readFrom;
     }
 
-    public void writePieceMovements(Piece piece)
-    {
+    public void writePieceMovements(Piece piece) {
         Movement[] movements = piece.pieceMovement();
 
             try {
@@ -153,5 +149,16 @@ public class DataTransfer
             } catch (IOException e) {
                 System.err.println("Error");
         }
+    }
+
+    public boardSituation readBoardSituation(String input){
+        boardSituation situation = new boardSituation();
+
+        boardSituation.
+        return
+    }
+
+    public void setBoardSituations(){
+
     }
 }
