@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Pawn extends Piece {
     private double pieceValue = 1;
     private String pieceName = "Pawn";
@@ -6,6 +8,8 @@ public class Pawn extends Piece {
     private int pieceCol;
     private int pieceRow;
     private boolean firstMove = true;
+    private ArrayList<BoardSituation> valuedSituations = new ArrayList<BoardSituation>();
+    DataTransfer data = new DataTransfer(null, null);
 
     public Movement[] pieceMovement() {/*
 
@@ -61,8 +65,27 @@ public class Pawn extends Piece {
         color = x;
     }
 
+    public ArrayList<BoardSituation> getValuedSituations() {
+        return valuedSituations;
+    }
+
+    public void setValuedSituations() {
+        try {
+            for (int i = 0; i < Integer.MAX_VALUE; i++) {
+
+                valuedSituations.add(data.readBoardSituation(this,i)) ;
+            }
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+        }
+    }
+
     public void setPieceValue() {
-        DataTransfer data = new DataTransfer(null, null);
         pieceValue = data.readPtVal(this);
+    }
+
+    public void setPieceValue(double val) {
+        pieceValue = val;
     }
 }

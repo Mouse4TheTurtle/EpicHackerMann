@@ -255,5 +255,10 @@ public class Board {
         output += "    A     B     C     D     E     F     G     H";
         return output;
     }
+
+    public Piece getPiece(int row, int col)
+    {
+        return chessBoard[row][col];
+    }
 }
 

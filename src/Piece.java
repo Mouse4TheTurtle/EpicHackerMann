@@ -62,9 +62,14 @@ abstract class Piece {
         }
     }
 
+    public void setValuedSituations(BoardSituation situation) {
+        valuedSituations.add(situation) ;
+    }
+
     public void setPieceValue() {
         pieceValue = data.readPtVal(this);
     }
+
     public void setPieceValue(double val)
     {
         pieceValue = val;
