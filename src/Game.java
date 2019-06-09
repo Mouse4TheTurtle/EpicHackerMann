@@ -28,7 +28,6 @@ public class Game {
                 else
                     System.out.println("Game is tied!");
 
-
                 System.out.println("\nMove which piece? ");
 
                 System.out.println("Column: ");
