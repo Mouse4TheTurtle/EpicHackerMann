@@ -65,7 +65,7 @@ public class King extends Piece {
                 valuedSituations.add(data.readBoardSituation(this,i)) ;
             }
         }
-        catch (IndexOutOfBoundsException e)
+        catch (NullPointerException e)
         {
         }
     }

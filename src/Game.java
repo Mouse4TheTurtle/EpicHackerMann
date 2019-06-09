@@ -1,3 +1,4 @@
+import javax.xml.crypto.Data;
 import java.util.Scanner;
 
 public class Game {
@@ -5,10 +6,11 @@ public class Game {
         Board gamer = new Board();
         String response = "";
         Scanner keyboard = new Scanner(System.in);
+        DataTransfer data = new DataTransfer(null, null);
 
         for (Piece[] h : gamer.getBoard()) {
             for (Piece i : h) {
-
+                i.setValuedSituations();
             }
         }
         int x;

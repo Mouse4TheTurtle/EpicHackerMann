@@ -1,6 +1,6 @@
-3.5
+3
 |BRook|BKnight|BBishop|BQueen|BKing|BBishop|BKnight|BRook|
-|BEmpty|BPawn|BPawn|BPawn|BPawn|BPawn|BPawn|BPawn|
+|BPawn|BPawn|BPawn|BPawn|BPawn|BPawn|BPawn|BPawn|
 |BEmpty|BEmpty|BEmpty|BEmpty|BEmpty|BEmpty|BEmpty|BEmpty|
 |BEmpty|BEmpty|BEmpty|BEmpty|BEmpty|BEmpty|BEmpty|BEmpty|
 |BEmpty|BEmpty|BEmpty|BEmpty|BEmpty|BEmpty|BEmpty|BEmpty|
