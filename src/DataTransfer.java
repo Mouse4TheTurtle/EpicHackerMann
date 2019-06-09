@@ -155,7 +155,7 @@ public class DataTransfer {
             reader = new BufferedReader(new FileReader(workingDirectory + "\\data\\Board\\BoardSituations\\" + colorH + "\\" + piece.getPieceName() + "\\" + number + ".txt"));
             String line = reader.readLine();
             value = Double.parseDouble(line);
-            System.out.println(value);
+            //System.out.println(value);
             int row = 0;
             int col = 0;
             String temp = "";
