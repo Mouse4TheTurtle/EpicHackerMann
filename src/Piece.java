@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 abstract class Piece {
     private double pieceValue;
     private String pieceName;
@@ -5,6 +7,8 @@ abstract class Piece {
     private Movement[] movements;
     private int pieceCol;
     private int pieceRow;
+    private ArrayList<BoardSituation> valuedSituations = new ArrayList<BoardSituation>();
+    DataTransfer data = new DataTransfer(null, null);
 
     public Movement[] pieceMovement() {
         return movements;
@@ -42,12 +46,23 @@ abstract class Piece {
         pieceRow = row;
     }
 
-    public void valuedSituations() {
+    public ArrayList<BoardSituation> getValuedSituations() {
+        return valuedSituations;
+    }
 
+    public void setValuedSituations() {
+        try {
+            for (int i = 0; i < Integer.MAX_VALUE; i++) {
+
+                valuedSituations.add(data.readBoardSituation(this,i)) ;
+            }
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+        }
     }
 
     public void setPieceValue() {
-        DataTransfer data = new DataTransfer(null, null);
         pieceValue = data.readPtVal(this);
     }
 }
