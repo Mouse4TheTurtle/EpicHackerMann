@@ -155,17 +155,19 @@ public class DataTransfer {
             reader = new BufferedReader(new FileReader(workingDirectory + "\\data\\Board\\BoardSituations\\" + colorH + "\\" + piece.getPieceName() + "\\" + number + ".txt"));
             String line = reader.readLine();
             value = Double.parseDouble(line);
-
+            System.out.println(value);
             int row = 0;
             int col = 0;
             String temp = new String();
 
-            for (int i = 0; i < board.getBoard().length; i++) {
+            for (int i = 0; i < 8; i++) {
                 line = reader.readLine();
                 String h = line;
                 System.out.println("Reading line: " + i);
+                col = 0;
                 for (int j = 0; j < h.length(); j++) {
-                    if(h.length()>10) {
+                    if(h.length()>6) {
+                        System.out.println("Reading Piece: " + col);
                         if (h.substring(h.indexOf("|") + 1).indexOf("B") == 0) {
                             System.out.println("Piece is Black");
                             pieceColor = false;
@@ -174,19 +176,17 @@ public class DataTransfer {
                             pieceColor = true;
                         }
 
+                        temp = h.substring(h.indexOf("|") + 1);
+                        temp = temp.substring(1, temp.indexOf("|"));
+                        System.out.println(temp);
+
                         for (String name : pieceNames) {
-                            System.out.println("Reading Piece: " + col);
-                            temp = h.substring(h.indexOf("|") + 1);
-                            temp = temp.substring(1, temp.indexOf("|"));
-                            System.out.println(temp);
                             if (temp.equals(name)) {
                                 System.out.println("Piece is: " + name);
                                 h = h.substring(3 + name.length());
-                                piece = readPieceData(pieceColor, name);
+                                piece = readPieceData(pieceColor, name, i, col);
                             }
                         }
-
-                        piece.setLocation(i, col);
                         board.setPiece(piece);
                         col++;
 
@@ -205,11 +205,65 @@ public class DataTransfer {
                 System.out.println("Error while closing reader");
             }
         }
+        situation.setSituationPiece(piece);
+        situation.setSituationBoard(board);
+        situation.setSituationValue(value);
         System.out.println("Done Reading");
         return situation;
     }
 
     public void writeBoardSituation(Piece piece, Board board, double value) {
+        int number = 0;
+        String colorH = "";
+        if (piece.getColor()) {
+            colorH = "White";
+        } else {
+            colorH = "Black";
+        }
+        try {
+            for (int i = 0; i < 99999; i++) {
+                System.out.println("Try number " +i);
+                number=i;
+                if(new File (workingDirectory + "\\data\\Board\\BoardSituations\\" + colorH + "\\" + piece.getPieceName() + "\\" + number + ".txt").exists())
+                {
+                }
+                else
+                    i=99999;
+            }
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Error creating file.");
+        }
+        try {
+            new File(workingDirectory + "\\data\\Board\\BoardSituations\\" + colorH + "\\" + piece.getPieceName()).mkdirs();
+            FileOutputStream is = new FileOutputStream(workingDirectory + "\\data\\Board\\BoardSituations\\" + colorH + "\\" + piece.getPieceName() + "\\" + number + ".txt");
+            OutputStreamWriter osw = new OutputStreamWriter(is);
+            Writer w = new BufferedWriter(osw);
+            w.write(""+value+"\n");
+            for (Piece[] a : board.getBoard()) {
+                for (Piece b : a) {
+                    if (b.getColor()) {
+                        colorH = "White";
+                    } else {
+                        colorH = "Black";
+                    }
+                    w.write("|"+colorH.substring(0,1)+b.getPieceName());
+                }
+                w.write("|\n");
+            }
+
+            w.close();
+        } catch (IOException e) {
+            System.err.println("Error while writing");
+        }
+        System.out.println("Done Writing");
+    }
+
+    public void writeBoardSituation(BoardSituation situation) {
+
+        Piece piece = situation.getSituationPiece();
+        Board board = situation.getSituationBoard();
+        Double value = situation.getSituationValue();
+
         int number = 0;
         String colorH = "";
         if (piece.getColor()) {
@@ -294,7 +348,54 @@ public class DataTransfer {
                 piece = new Empty();
 
             piece.setColor(color);
-            piece.setPieceValue();
+            piece.setPieceValue(value);
+            piece.setLocation(row, col);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                reader.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return piece;
+    }
+
+    public Piece readPieceData(boolean color, String name, int row, int col) {
+        Piece piece = new Empty();
+        double value = 0;
+
+        String colorH = "";
+        if (color) {
+            colorH = "White";
+        } else {
+            colorH = "Black";
+        }
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(workingDirectory + "\\data\\PieceData\\" + colorH + "\\" + name + ".txt"));
+            String line = reader.readLine();
+            value = Double.parseDouble(line);
+
+            if (name.equals("Pawn"))
+                piece = new Pawn();
+            if (name.equals("Rook"))
+                piece = new Rook();
+            if (name.equals("Knight"))
+                piece = new Knight();
+            if (name.equals("Bishop"))
+                piece = new Bishop();
+            if (name.equals("Queen"))
+                piece = new Queen();
+            if (name.equals("King"))
+                piece = new King();
+            if (name.equals("Empty"))
+                piece = new Empty();
+
+            piece.setColor(color);
+            piece.setPieceValue(value);
             piece.setLocation(row, col);
 
         } catch (IOException e) {

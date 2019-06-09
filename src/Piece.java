@@ -65,4 +65,8 @@ abstract class Piece {
     public void setPieceValue() {
         pieceValue = data.readPtVal(this);
     }
+    public void setPieceValue(double val)
+    {
+        pieceValue = val;
+    }
 }

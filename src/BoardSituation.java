@@ -2,6 +2,7 @@ public class BoardSituation {
 
     private Board board;
     private double value;
+    private Piece piece;
 
     public BoardSituation() {
         board = new Board();
@@ -17,12 +18,20 @@ public class BoardSituation {
         value = value1;
     }
 
-    public double getPieceValueData()
+    public void setSituationPiece(Piece piece1){
+        piece = piece1;
+    }
+
+    public Piece getSituationPiece() {
+        return piece;
+    }
+
+    public double getSituationValue()
     {
         return value;
     }
 
-    public Board getBoardData()
+    public Board getSituationBoard()
     {
         return board;
     }
@@ -32,7 +41,7 @@ public class BoardSituation {
         String output = "";
 
         output += board.toString();
-        System.out.println("This board gives the piece a value of " + value);
+        System.out.println("This board gives " + piece + " a value of " + value);
 
         return output;
     }
