@@ -195,7 +195,7 @@ public class Board {
         if(h.getPieceName().equals("King")) {
             for (Piece[] a : chessBoard) {
                 for (Piece b : a) {
-                    if (b.getPieceName() != "Empty") {
+                    if (!b.getPieceName().equals("Empty")) {
                         for (Movement move : b.pieceMovement()) {
                             attackerRow = h.getRow() + move.getMovementRow();
                             attackerCol = h.getCol() + move.getMovementCol();
