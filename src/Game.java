@@ -105,7 +105,6 @@ public class Game {
                     i.setValuedSituations();
                 }
             }
-
             //bot interactions go here
         }
     }

@@ -63,8 +63,13 @@ public class Board {
 
         if (x.getRow() + m.getMovementRow() >= 0 && x.getCol() + m.getMovementCol() >= 0 && x.getRow() + m.getMovementRow() < 8 && x.getCol() + m.getMovementCol() < 8) {
             if (m.getMovementRow() == 0 && m.getMovementCol() == 0) {
-                System.out.println("You can't move a piece to its own spot!");
-                return true;
+                if(checkingIfBlocked) {
+                    System.out.println("You can't move a piece to its own spot!");
+                    return true;
+                }
+                else {
+                    return false;
+                }
             }
             if (checkingIfBlocked && !chessBoard[x.getRow() + m.getMovementRow()][x.getCol() + m.getMovementCol()].getPieceName().equals("Empty")) {
                 System.out.println("Blocked by a piece!");
@@ -77,7 +82,7 @@ public class Board {
                 return false;
             }
             for (int i = 0; i < x.pieceMovement().length; i++) {
-                System.out.println("Trying Possible Move: " + x.pieceMovement()[i].getMovementRow() + " " + x.pieceMovement()[i].getMovementCol());
+                //System.out.println("Trying Possible Move: " + x.pieceMovement()[i].getMovementRow() + " " + x.pieceMovement()[i].getMovementCol());
 
                 int checkRow = 0;
                 int checkCol = 0;
@@ -87,7 +92,6 @@ public class Board {
                         System.out.println("Valid Move.");
                         return true;
                     }
-                    ;
                     if (m.getMovementRow() + x.getRow() > x.getRow()) {
                         checkRow = -1;
                     }
@@ -165,14 +169,14 @@ public class Board {
             chessBoard[attRow][attCol] = new Empty();
             System.out.println(d.getPieceName());
 
-            for (Piece[] i:chessBoard) {
-                for (Piece h:i) {
-                    if(inCheck(h)) {
+            for (int i = 0; i < chessBoard.length; i++) {
+                for (int j = 0; j < chessBoard[i].length; j++) {
+                    if (inCheck(chessBoard[i][j])) {
                         System.out.println("Can not put King in check!");
                         chessBoard[attRow][attCol] = a;
-                        chessBoard[attRow][attCol].setLocation(attRow,attCol);
+                        chessBoard[attRow][attCol].setLocation(attRow, attCol);
                         chessBoard[defRow][defCol] = new Empty();
-
+                        return;
                     }
                 }
             }
@@ -189,23 +193,24 @@ public class Board {
     }
 
     public boolean inCheck(Piece h) {
+        System.out.println("Checking " + h.getPieceName());
         int attackerRow;
         int attackerCol;
-        if(h.getPieceName().equals("King")) {
+        Movement move;
+        if (h.getPieceName().equals("King")) {
             for (Piece[] a : chessBoard) {
                 for (Piece b : a) {
-                    if (!b.getPieceName().equals("Empty")) {
-                        for (Movement move : b.pieceMovement()) {
-                            attackerRow = h.getRow() + move.getMovementRow();
-                            attackerCol = h.getCol() + move.getMovementCol();
-                            if (attackerRow >= 0 && attackerCol >= 0 && attackerRow < 8 && attackerCol < 8) {
-                                if (chessBoard[attackerRow][attackerCol].getPieceName().equals(b.getPieceName())&&chessBoard[attackerRow][attackerCol].getColor()!=b.getColor())
-                                {
-                                    System.out.println("In check!");
-                                    return true;
-                                }
-                            }
+                    if (!b.getPieceName().equals("Empty")&&!b.getPieceName().equals("King")) {
+
+                        attackerRow = h.getRow()-b.getRow();
+                        attackerCol = h.getCol()-b.getCol();
+
+                        move = new Movement(attackerRow, attackerCol);
+                        if (validMove(b, move)) {
+                            System.out.println("In Check!");
+                            return true;
                         }
+
                     }
                 }
             }
@@ -229,7 +234,7 @@ public class Board {
         return chessBoard;
     }
 
-    public void setBoard(Board board){
+    public void setBoard(Board board) {
         for (int i = 0; i < chessBoard.length; i++) {
             for (int j = 0; j < chessBoard[i].length; j++) {
                 setPiece(board.getBoard()[i][j]);
@@ -237,34 +242,43 @@ public class Board {
         }
     }
 
-    public void setPiece(Piece h){
-        chessBoard[h.getRow()][h.getCol()]=h;
+    public void setPiece(Piece h) {
+        chessBoard[h.getRow()][h.getCol()] = h;
     }
 
     public String toString() {
         String output = "";
+        String pieceName = "";
         int j = 8;
         String colorH = "";
         for (Piece[] i : chessBoard) {
             output += j + " ";
             for (Piece h : i) {
-
-                if (h.getColor()&&!h.getPieceName().equals("Empty")) {
-                    colorH = "W";
-                } else if(!h.getColor()&&!h.getPieceName().equals("Empty")){
-                    colorH = "B";
+                if(!h.getPieceName().equals("Empty"))
+                {
+                    if (h.getColor()) {
+                        colorH = "W";
+                    } else {
+                        colorH = "B";
+                    }
                 }
-                output += colorH + h.getPieceName() + " ";
+                else
+                    colorH = "";
+                pieceName = colorH + h.getPieceName();
+                while (pieceName.length()<8)
+                {
+                    pieceName += " ";
+                }
+                output+=pieceName;
             }
             output += "\n";
             j--;
         }
-        output += "    A     B     C     D     E     F     G     H";
+        output += "     A      B       C       D       E       F       G      H";
         return output;
     }
 
-    public Piece getPiece(int row, int col)
-    {
+    public Piece getPiece(int row, int col) {
         return chessBoard[row][col];
     }
 }

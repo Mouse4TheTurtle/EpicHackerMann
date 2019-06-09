@@ -11,24 +11,33 @@ public class Pawn extends Piece {
     private ArrayList<BoardSituation> valuedSituations = new ArrayList<BoardSituation>();
     DataTransfer data = new DataTransfer(null, null);
 
-    public Movement[] pieceMovement() {/*
+    public Movement[] pieceMovement() {
 
         if (firstMove=true)
         {
             movements = new Movement[2];
-            movements[0] = new Movement(1,0);
-            movements[0] = new Movement(2,0);
+            if (color) {
+                movements[0] = new Movement(-1, 0);
+                movements[1] = new Movement(-2, 0);
+            }
+            else
+            {
+                movements[0] = new Movement(1, 0);
+                movements[1] = new Movement(2, 0);
+            }
         }
 
-        if (firstMove=false)
-        {*/
-        movements = new Movement[1];
-        if (color)
-            movements[0] = new Movement(-1, 0);
         else
-            movements[0] = new Movement(1, 0);
-        // }
-
+        {
+            movements = new Movement[1];
+            if (color) {
+                movements[0] = new Movement(-1, 0);
+            }
+            else
+            {
+                movements[0] = new Movement(1, 0);
+            }
+        }
         return movements;
     }
 
@@ -45,7 +54,7 @@ public class Pawn extends Piece {
     }
 
     public void moved() {
-        this.firstMove = false;
+        firstMove = false;
     }
 
     public int getRow() {
