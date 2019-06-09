@@ -1,6 +1,6 @@
 public class Board {
     private Piece[][] chessBoard;
-    private double advantage = 0;
+    private double advantage = 0.0;
     private boolean checkingIfBlocked = false;
 
     public Board() {
@@ -215,6 +215,7 @@ public class Board {
     }
 
     public double getAdvantage() {
+
         return advantage;
     }
 
