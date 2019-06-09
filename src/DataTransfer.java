@@ -163,39 +163,34 @@ public class DataTransfer {
             for (int i = 0; i < 8; i++) {
                 line = reader.readLine();
                 String h = line;
-                System.out.println("Reading line: " + i);
+                //System.out.println("Reading line: " + i);
                 col = 0;
                 for (int j = 0; j < h.length(); j++) {
-                    //if(h.length()>6) {
-                        System.out.println("Reading Piece: " + col);
+                        //System.out.println("Reading Piece: " + col);
                         if (h.substring(h.indexOf("|") + 1).indexOf("B") == 0) {
-                            System.out.println("Piece is Black");
+                            //System.out.println("Piece is Black");
                             pieceColor = false;
                         } else {
-                            System.out.println("Piece is White");
+                            //System.out.println("Piece is White");
                             pieceColor = true;
                         }
 
                         temp = h.substring(h.indexOf("|") + 1);
-                        System.out.println("Temp1: " + temp);
+                        //System.out.println("Temp1: " + temp);
                         temp = temp.substring(1, temp.indexOf("|"));
-                        System.out.println("Temp2: " + temp);
+                        //System.out.println("Temp2: " + temp);
 
                         for (String name : pieceNames) {
                             if (temp.equals(name)) {
-                                System.out.println("Piece is: " + name);
-                                System.out.println("h1: " + h);
+                                //System.out.println("Piece is: " + name);
+                                //System.out.println("h1: " + h);
                                 h = h.substring(2+temp.length());
-                                System.out.println("h2: " + h);
+                                //System.out.println("h2: " + h);
                                 piece = makePieceFromData(pieceColor, name, i, col);
                             }
                         }
                         board.setPiece(piece);
                         col++;
-
-                    //}
-                    //else
-                        //j=h.length()+1;
                 }
                 row++;
             }
