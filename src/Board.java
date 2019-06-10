@@ -60,6 +60,55 @@ public class Board {
     }
 
     public boolean validMove(Piece x, Movement m) {
+        if(x.getPieceName().equals("Pawn"))
+        {
+            if(x.getColor()) {
+                System.out.println("a");
+                if (m.getMovementRow() == -1) {
+                    System.out.println("c");
+                    if (m.getMovementCol()==1) {
+                        System.out.println("d");
+                        if (!chessBoard[x.getRow() - 1][x.getCol() + 1].getColor() && !chessBoard[x.getRow() - 1][x.getCol() + 1].getPieceName().equals("Empty")) {
+                            System.out.println("e");
+                            return true;
+                        }
+                    }
+                    if (m.getMovementCol()==-1) {
+                        System.out.println("f");
+                        if (!chessBoard[x.getRow() - 1][x.getCol() - 1].getColor() && !chessBoard[x.getRow() - 1][x.getCol() - 1].getPieceName().equals("Empty")) {
+                            System.out.println("g");
+                            return true;
+                        }
+                    }
+                    if(m.getMovementCol()==0)
+                    {
+                        System.out.println("h");
+                        return true;
+                    }
+                }
+
+            }
+            else
+            {
+                System.out.println("b");
+                if (m.getMovementRow() == 1) {
+                    if (m.getMovementCol()==1) {
+                        if (chessBoard[x.getRow() + 1][x.getCol() + 1].getColor() && !chessBoard[x.getRow() + 1][x.getCol() + 1].getPieceName().equals("Empty")) {
+                            return true;
+                        }
+                    }
+                    if (m.getMovementCol()==-1) {
+                        if (chessBoard[x.getRow() + 1][x.getCol() - 1].getColor() && !chessBoard[x.getRow() + 1][x.getCol() - 1].getPieceName().equals("Empty")) {
+                            return true;
+                        }
+                    }
+                    if(m.getMovementCol()==0)
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
 
         if (x.getRow() + m.getMovementRow() >= 0 && x.getCol() + m.getMovementCol() >= 0 && x.getRow() + m.getMovementRow() < 8 && x.getCol() + m.getMovementCol() < 8) {
             if (m.getMovementRow() == 0 && m.getMovementCol() == 0) {
@@ -88,6 +137,7 @@ public class Board {
                 int checkCol = 0;
 
                 if (m.getMovementCol() == x.pieceMovement()[i].getMovementCol() && m.getMovementRow() == x.pieceMovement()[i].getMovementRow()) {
+
                     if (x.getPieceName().equals("Knight")) {
                         System.out.println("Valid Move.");
                         return true;

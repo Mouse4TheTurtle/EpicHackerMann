@@ -84,7 +84,7 @@ public class Game {
                 }
                 else
                 {
-                    color = "White";
+                    color = "Black";
                 }
 
                 System.out.println("Moving " + color + " " + gamer.getBoard()[x][y].getPieceName());
