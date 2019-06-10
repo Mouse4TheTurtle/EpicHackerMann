@@ -71,12 +71,12 @@ public class Board {
                     return false;
                 }
             }
-            if (checkingIfBlocked && !chessBoard[x.getRow() + m.getMovementRow()][x.getCol() + m.getMovementCol()].getPieceName().equals("Empty")) {
+            if (checkingIfBlocked && !chessBoard[x.getRow() + m.getMovementRow()][x.getCol() + m.getMovementCol()].getPieceName().equals("Empty")&&chessBoard[x.getRow() + m.getMovementRow()][x.getCol() + m.getMovementCol()].getColor()==x.getColor()) {
                 System.out.println("Blocked by a piece!");
                 return false;
             }
-            System.out.println("Movement  " + m.getMovementRow() + " " + m.getMovementCol());
-            System.out.println("By Piece At: " + x.getRow() + " " + x.getCol());
+            //System.out.println("Movement  " + m.getMovementRow() + " " + m.getMovementCol());
+            //System.out.println("By Piece At: " + x.getRow() + " " + x.getCol());
             if (chessBoard[x.getRow() + m.getMovementRow()][x.getCol() + m.getMovementCol()].getColor() == x.getColor() && !chessBoard[x.getRow() + m.getMovementRow()][x.getCol() + m.getMovementCol()].getPieceName().equals("Empty")) {
                 System.out.println("Can not take piece of same Color!");
                 return false;
@@ -143,7 +143,7 @@ public class Board {
     public void movePiece(Piece x, Movement m) {
 
         if (validMove(x, m)) {
-            System.out.println("Move Identified.");
+            //System.out.println("Move Identified.");
             if (x.getPieceName().equals("Pawn")) {
                 x.moved();
             }
@@ -181,11 +181,11 @@ public class Board {
                 }
             }
             if (defendingColor) {
-                advantage += d.getPieceValue();
-                System.out.println("White Advantage");
-            } else {
                 advantage -= d.getPieceValue();
                 System.out.println("Black Advantage");
+            } else {
+                advantage += d.getPieceValue();
+                System.out.println("White Advantage");
             }
         } else {
             System.out.println("Take Failed");
@@ -193,7 +193,7 @@ public class Board {
     }
 
     public boolean inCheck(Piece h) {
-        System.out.println("Checking " + h.getPieceName());
+        //System.out.println("Checking " + h.getPieceName());
         int attackerRow;
         int attackerCol;
         Movement move;

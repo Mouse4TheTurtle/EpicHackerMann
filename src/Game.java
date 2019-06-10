@@ -21,10 +21,13 @@ public class Game {
             while (!response.toLowerCase().equals("exit")) {
 
                 System.out.println(gamer);
+
                 if(gamer.getAdvantage()>0)
                 System.out.println("White is up by: " + gamer.getAdvantage());
+
                 if(gamer.getAdvantage()<0)
                     System.out.println("Black is up by: " + gamer.getAdvantage()*-1);
+
                 else
                     System.out.println("Game is tied!");
 
