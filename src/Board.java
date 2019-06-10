@@ -63,34 +63,33 @@ public class Board {
         if(x.getPieceName().equals("Pawn"))
         {
             if(x.getColor()) {
-                System.out.println("a");
+                //System.out.println("a");
                 if (m.getMovementRow() == -1) {
-                    System.out.println("c");
+                    //System.out.println("c");
                     if (m.getMovementCol()==1) {
-                        System.out.println("d");
+                        //System.out.println("d");
                         if (!chessBoard[x.getRow() - 1][x.getCol() + 1].getColor() && !chessBoard[x.getRow() - 1][x.getCol() + 1].getPieceName().equals("Empty")) {
-                            System.out.println("e");
+                            //System.out.println("e");
                             return true;
                         }
                     }
                     if (m.getMovementCol()==-1) {
-                        System.out.println("f");
+                        //System.out.println("f");
                         if (!chessBoard[x.getRow() - 1][x.getCol() - 1].getColor() && !chessBoard[x.getRow() - 1][x.getCol() - 1].getPieceName().equals("Empty")) {
-                            System.out.println("g");
+                            //System.out.println("g");
                             return true;
                         }
                     }
                     if(m.getMovementCol()==0)
                     {
-                        System.out.println("h");
+                        //System.out.println("h");
                         return true;
                     }
                 }
-
             }
             else
             {
-                System.out.println("b");
+                //System.out.println("b");
                 if (m.getMovementRow() == 1) {
                     if (m.getMovementCol()==1) {
                         if (chessBoard[x.getRow() + 1][x.getCol() + 1].getColor() && !chessBoard[x.getRow() + 1][x.getCol() + 1].getPieceName().equals("Empty")) {
@@ -109,7 +108,6 @@ public class Board {
                 }
             }
         }
-
         if (x.getRow() + m.getMovementRow() >= 0 && x.getCol() + m.getMovementCol() >= 0 && x.getRow() + m.getMovementRow() < 8 && x.getCol() + m.getMovementCol() < 8) {
             if (m.getMovementRow() == 0 && m.getMovementCol() == 0) {
                 if(checkingIfBlocked) {
@@ -327,7 +325,6 @@ public class Board {
         output += "     A      B       C       D       E       F       G      H";
         return output;
     }
-
     public Piece getPiece(int row, int col) {
         return chessBoard[row][col];
     }
