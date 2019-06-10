@@ -105,7 +105,9 @@ public class Game {
 
             for (Piece[] h : gamer.getBoard()) {
                 for (Piece i : h) {
-                    i.setValuedSituations();
+                    if(!i.getPieceName().equals("Empty")) {
+                        i.setValuedSituations();
+                    }
                 }
             }
             //bot interactions go here
