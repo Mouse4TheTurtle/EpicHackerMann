@@ -407,4 +407,108 @@ public class DataTransfer {
         }
         return piece;
     }
+
+    public Board readBoard(int number) {
+
+        BoardSituation situation = new BoardSituation();
+        Board board = new Board();
+        Piece piece = new Empty();
+        boolean pieceColor;
+
+        BufferedReader reader = null;
+        try {
+            reader = new BufferedReader(new FileReader(workingDirectory + "\\data\\Board\\Boards\\" + number + ".txt"));
+            String line = "";
+            int row = 0;
+            int col = 0;
+            String temp = "";
+
+            for (int i = 0; i < 8; i++) {
+                line = reader.readLine();
+                String h = line;
+                //System.out.println("Reading line: " + i);
+                col = 0;
+                for (int j = 0; j < h.length(); j++) {
+                    //System.out.println("Reading Piece: " + col);
+                    if (h.substring(h.indexOf("|") + 1).indexOf("B") == 0) {
+                        //System.out.println("Piece is Black");
+                        pieceColor = false;
+                    } else {
+                        //System.out.println("Piece is White");
+                        pieceColor = true;
+                    }
+
+                    temp = h.substring(h.indexOf("|") + 1);
+                    //System.out.println("Temp1: " + temp);
+                    temp = temp.substring(1, temp.indexOf("|"));
+                    //System.out.println("Temp2: " + temp);
+
+                    for (String name : pieceNames) {
+                        if (temp.equals(name)) {
+                            //System.out.println("Piece is: " + name);
+                            //System.out.println("h1: " + h);
+                            h = h.substring(2+temp.length());
+                            //System.out.println("h2: " + h);
+                            piece = makePieceFromData(pieceColor, name, i, col);
+                        }
+                    }
+                    board.setPiece(piece);
+                    col++;
+                }
+                row++;
+            }
+        } catch (IOException e) {
+            //System.out.println("Error while reading.");
+        } finally {
+            try {
+                reader.close();
+            } catch (IOException e) {
+                //System.out.println("Error while closing reader");
+            }
+        }
+        return board;
+    }
+
+    public void writeBoard(Board board) {
+
+        int number = 0;
+
+        String colorH = "";
+
+        try {
+            for (int i = 0; i < 99999; i++) {
+                System.out.println("Try number " +i);
+                number=i;
+                if(new File (workingDirectory + "\\data\\Board\\Boards\\" + number + ".txt").exists())
+                {
+                }
+                else
+                    i=99999;
+            }
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("Error creating file.");
+        }
+        try {
+            new File(workingDirectory + "\\data\\Board\\Boards").mkdirs();
+            FileOutputStream is = new FileOutputStream(workingDirectory + "\\data\\Board\\Boards\\" + number + ".txt");
+            OutputStreamWriter osw = new OutputStreamWriter(is);
+            Writer w = new BufferedWriter(osw);
+            for (Piece[] a : board.getBoard()) {
+                for (Piece b : a) {
+                    if (b.getColor()) {
+                        colorH = "White";
+                    } else {
+                        colorH = "Black";
+                    }
+                    w.write("|"+colorH.substring(0,1)+b.getPieceName());
+                }
+                w.write("|\n");
+            }
+
+            w.close();
+        } catch (IOException e) {
+            System.err.println("Error while writing");
+        }
+        System.out.println("Done Writing");
+    }
 }

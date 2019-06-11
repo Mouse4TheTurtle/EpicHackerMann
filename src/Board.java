@@ -109,6 +109,7 @@ public class Board {
                 if (m.getMovementRow() == 0 && m.getMovementCol() == 0) {
                     if (checkingIfBlocked) {
                         System.out.println("You can't move a piece to its own spot!");
+                        checkingIfBlocked = false;
                         return true;
                     } else {
                         return false;
@@ -116,6 +117,7 @@ public class Board {
                 }
                 if (checkingIfBlocked && !chessBoard[x.getRow() + m.getMovementRow()][x.getCol() + m.getMovementCol()].getPieceName().equals("Empty") && chessBoard[x.getRow() + m.getMovementRow()][x.getCol() + m.getMovementCol()].getColor() == x.getColor()) {
                     System.out.println("Blocked by a piece!");
+                    checkingIfBlocked = false;
                     return false;
                 }
                 //System.out.println("Movement  " + m.getMovementRow() + " " + m.getMovementCol());
@@ -219,12 +221,17 @@ public class Board {
 
             for (int i = 0; i < chessBoard.length; i++) {
                 for (int j = 0; j < chessBoard[i].length; j++) {
-                    if (chessBoard[i][j].getColor() == a.getColor()) {
-                        if (inCheck(chessBoard[i][j])) {
-                            System.out.println("Can not put King in check!");
+
+                    if (inCheck(chessBoard[i][j])) {
+                        if (chessBoard[i][j].getColor() == a.getColor()) {
+                            System.out.println("Can not put your own King in check!");
                             chessBoard[attRow][attCol] = a;
                             chessBoard[attRow][attCol].setLocation(attRow, attCol);
                             chessBoard[defRow][defCol] = new Empty();
+                            return;
+                        }
+                        else if (chessBoard[i][j].getColor() != a.getColor()) {
+                            System.out.println(chessBoard[i][j].getColor() + " King is in check!");
                             return;
                         }
                     }
