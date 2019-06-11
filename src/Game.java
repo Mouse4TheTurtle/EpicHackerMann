@@ -14,7 +14,7 @@ public class Game {
         int z;
 
         System.out.println("Use manual control? ");
-        if (keyboard.nextLine().equals("yes")) {
+        if (keyboard.nextLine().toLowerCase().equals("yes")) {
 
             System.out.println("Setting up game...");
 
@@ -30,7 +30,11 @@ public class Game {
 
                 else
                     System.out.println("Game is tied!");
-
+                if (gamer.whoseTurn()) {
+                    System.out.println("It is White's Turn");
+                } else {
+                    System.out.println("It is Black's Turn");;
+                }
                 System.out.println("\nMove which piece? ");
 
                 System.out.println("Column: ");
@@ -105,7 +109,7 @@ public class Game {
 
             for (Piece[] h : gamer.getBoard()) {
                 for (Piece i : h) {
-                    if(!i.getPieceName().equals("Empty")) {
+                    if(!  i.getPieceName().equals("Empty")) {
                         i.setValuedSituations();
                     }
                 }
