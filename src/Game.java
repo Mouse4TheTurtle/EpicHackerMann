@@ -107,6 +107,11 @@ public class Game {
 
                     z = keyboard.nextInt();
 
+                    if(gamer.whoseTurn())
+                    {
+                        w *= -1;
+                    }
+
                     gamer.movePiece(gamer.getBoard()[x][y], new Movement(w, z));
 
                     System.out.println("Save current board?");
