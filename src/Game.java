@@ -38,7 +38,7 @@ public class Game {
                         System.out.println("Black is up by: " + gamer.getAdvantage() * -1);
 
                     else
-                        System.out.println("Game is tied!");
+                        System.out.println("Game is tied");
                     if (gamer.whoseTurn()) {
                         System.out.println("It is White's Turn");
                     } else {
@@ -106,6 +106,11 @@ public class Game {
                     System.out.println("Move on the horizontal axis by? ");
 
                     z = keyboard.nextInt();
+
+                    if(gamer.whoseTurn())
+                    {
+                        w *= -1;
+                    }
 
                     gamer.movePiece(gamer.getBoard()[x][y], new Movement(w, z));
 
