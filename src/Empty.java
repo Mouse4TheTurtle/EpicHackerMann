@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Empty extends Piece {
     private double pieceValue = 0;
     private String pieceName = "Empty";
@@ -5,6 +7,8 @@ public class Empty extends Piece {
     private Movement[] movements;
     private int pieceCol;
     private int pieceRow;
+    private ArrayList<BoardSituation> valuedSituations = new ArrayList<BoardSituation>();
+    DataTransfer data = new DataTransfer(null, null);
 
     public Movement[] pieceMovement() {
         movements = new Movement[1];
@@ -42,8 +46,28 @@ public class Empty extends Piece {
         color = x;
     }
 
+    public ArrayList<BoardSituation> getValuedSituations() {
+        return valuedSituations;
+    }
+
+    public void setValuedSituations() {
+        try {
+            for (int i = 0; i < Integer.MAX_VALUE; i++) {
+
+                valuedSituations.add(data.readBoardSituation(this,i)) ;
+            }
+        }
+        catch (NullPointerException e)
+        {
+        }
+    }
+
     public void setPieceValue() {
-        DataTransfer data = new DataTransfer(null, null);
         pieceValue = data.readPtVal(this);
+    }
+
+    public void setPieceValue(double val)
+    {
+        pieceValue = val;
     }
 }

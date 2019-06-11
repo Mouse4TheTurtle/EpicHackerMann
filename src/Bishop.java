@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Bishop extends Piece {
     private double pieceValue = 3;
     private String pieceName = "Bishop";
@@ -5,6 +7,8 @@ public class Bishop extends Piece {
     private Movement[] movements;
     private int pieceCol;
     private int pieceRow;
+    private ArrayList<BoardSituation> valuedSituations = new ArrayList<BoardSituation>();
+    DataTransfer data = new DataTransfer(null, null);
 
     public Movement[] pieceMovement() {
         movements = new Movement[7 * 4];
@@ -46,13 +50,37 @@ public class Bishop extends Piece {
         pieceCol = col;
         pieceRow = row;
     }
+
     public void setColor(boolean x)
     {
         color = x;
     }
-    public void setPieceValue()
-    {
-        DataTransfer data = new DataTransfer(null,null);
+
+    public ArrayList<BoardSituation> getValuedSituations() {
+        return valuedSituations;
+    }
+
+    public void setValuedSituations() {
+        try {
+            for (int i = 0; i < Integer.MAX_VALUE; i++) {
+
+                valuedSituations.add(data.readBoardSituation(this,i)) ;
+            }
+        }
+        catch (NullPointerException e)
+        {
+        }
+    }
+
+    public void setPieceValue() {
         pieceValue = data.readPtVal(this);
+    }
+
+    public void setPieceValue(double val) {
+        pieceValue = val;
+    }
+
+    public void setValuedSituations(BoardSituation situation) {
+        valuedSituations.add(situation) ;
     }
 }

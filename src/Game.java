@@ -1,3 +1,4 @@
+import javax.xml.crypto.Data;
 import java.util.Scanner;
 
 public class Game {
@@ -5,12 +6,8 @@ public class Game {
         Board gamer = new Board();
         String response = "";
         Scanner keyboard = new Scanner(System.in);
+        DataTransfer data = new DataTransfer(null, null);
 
-        for (Piece[] h : gamer.getBoard()) {
-            for (Piece i : h) {
-
-            }
-        }
         int x;
         int y;
         int w;
@@ -18,13 +15,19 @@ public class Game {
 
         System.out.println("Use manual control? ");
         if (keyboard.nextLine().equals("yes")) {
+
+            System.out.println("Setting up game...");
+
             while (!response.toLowerCase().equals("exit")) {
 
                 System.out.println(gamer);
+
                 if(gamer.getAdvantage()>0)
                 System.out.println("White is up by: " + gamer.getAdvantage());
+
                 if(gamer.getAdvantage()<0)
                     System.out.println("Black is up by: " + gamer.getAdvantage()*-1);
+
                 else
                     System.out.println("Game is tied!");
 
@@ -81,7 +84,7 @@ public class Game {
                 }
                 else
                 {
-                    color = "White";
+                    color = "Black";
                 }
 
                 System.out.println("Moving " + color + " " + gamer.getBoard()[x][y].getPieceName());
@@ -98,7 +101,14 @@ public class Game {
         }
         else
         {
-            //for interaction with bot and stuff
+            System.out.println("Setting up game... ");
+
+            for (Piece[] h : gamer.getBoard()) {
+                for (Piece i : h) {
+                    i.setValuedSituations();
+                }
+            }
+            //bot interactions go here
         }
     }
 }
