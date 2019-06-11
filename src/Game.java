@@ -38,7 +38,7 @@ public class Game {
                         System.out.println("Black is up by: " + gamer.getAdvantage() * -1);
 
                     else
-                        System.out.println("Game is tied!");
+                        System.out.println("Game is tied");
                     if (gamer.whoseTurn()) {
                         System.out.println("It is White's Turn");
                     } else {

@@ -1,0 +1,8 @@
+|BRook|BKnight|BBishop|BEmpty|BKing|BBishop|BKnight|BRook|
+|BPawn|BPawn|BPawn|BEmpty|BPawn|BPawn|BPawn|BPawn|
+|BEmpty|BEmpty|BEmpty|BEmpty|BEmpty|BEmpty|BEmpty|BEmpty|
+|BEmpty|BEmpty|BEmpty|BEmpty|BEmpty|BEmpty|BEmpty|BEmpty|
+|BEmpty|BEmpty|BQueen|BEmpty|BEmpty|BEmpty|BEmpty|BEmpty|
+|BEmpty|BEmpty|WKnight|BEmpty|BEmpty|BEmpty|BEmpty|BEmpty|
+|WPawn|WPawn|BEmpty|WPawn|BEmpty|WPawn|WPawn|WPawn|
+|WRook|BEmpty|WBishop|WQueen|WKing|WBishop|WKnight|WRook|
