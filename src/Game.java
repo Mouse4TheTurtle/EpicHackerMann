@@ -20,13 +20,11 @@ public class Game {
             System.out.println("Would you like to load a board? ");
 
             if (keyboard.nextLine().toLowerCase().equals("yes")) {
-
                 System.out.println("Which board would you like to use? ");
 
                 gamer.setBoard(data.readBoard(keyboard.nextInt()));
 
                 System.out.println("Setting up game...");
-
             }
 
                 while (!response.toLowerCase().equals("exit")) {
@@ -110,6 +108,13 @@ public class Game {
                     z = keyboard.nextInt();
 
                     gamer.movePiece(gamer.getBoard()[x][y], new Movement(w, z));
+
+                    System.out.println("Save current board?");
+
+                    if(keyboard.next().toLowerCase().equals("yes"))
+                    {
+                    data.writeBoard(gamer);
+                    }
                 }
             } else {
                 System.out.println("Setting up game... ");
