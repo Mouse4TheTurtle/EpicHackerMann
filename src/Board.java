@@ -2,6 +2,7 @@ public class Board {
     private Piece[][] chessBoard;
     private double advantage = 0;
     private boolean checkingIfBlocked = false;
+    private boolean turn = true;
 
     public Board() {
         chessBoard = new Piece[8][8];
@@ -60,131 +61,131 @@ public class Board {
     }
 
     public boolean validMove(Piece x, Movement m) {
-        if(x.getPieceName().equals("Pawn"))
-        {
-            if(x.getColor()) {
-                //System.out.println("a");
-                if (m.getMovementRow() == -1) {
-                    //System.out.println("c");
-                    if (m.getMovementCol()==1) {
-                        //System.out.println("d");
-                        if (!chessBoard[x.getRow() - 1][x.getCol() + 1].getColor() && !chessBoard[x.getRow() - 1][x.getCol() + 1].getPieceName().equals("Empty")) {
-                            //System.out.println("e");
+        if (x.getColor() == turn || checkingIfBlocked) {
+            if (x.getPieceName().equals("Pawn")) {
+                if (x.getColor()) {
+                    //System.out.println("a");
+                    if (m.getMovementRow() == -1) {
+                        //System.out.println("c");
+                        if (m.getMovementCol() == 1) {
+                            //System.out.println("d");
+                            if (!chessBoard[x.getRow() - 1][x.getCol() + 1].getColor() && !chessBoard[x.getRow() - 1][x.getCol() + 1].getPieceName().equals("Empty")) {
+                                //System.out.println("e");
+                                return true;
+                            }
+                        }
+                        if (m.getMovementCol() == -1) {
+                            //System.out.println("f");
+                            if (!chessBoard[x.getRow() - 1][x.getCol() - 1].getColor() && !chessBoard[x.getRow() - 1][x.getCol() - 1].getPieceName().equals("Empty")) {
+                                //System.out.println("g");
+                                return true;
+                            }
+                        }
+                        if (m.getMovementCol() == 0) {
+                            //System.out.println("h");
                             return true;
                         }
                     }
-                    if (m.getMovementCol()==-1) {
-                        //System.out.println("f");
-                        if (!chessBoard[x.getRow() - 1][x.getCol() - 1].getColor() && !chessBoard[x.getRow() - 1][x.getCol() - 1].getPieceName().equals("Empty")) {
-                            //System.out.println("g");
+                } else {
+                    //System.out.println("b");
+                    if (m.getMovementRow() == 1) {
+                        if (m.getMovementCol() == 1) {
+                            if (chessBoard[x.getRow() + 1][x.getCol() + 1].getColor() && !chessBoard[x.getRow() + 1][x.getCol() + 1].getPieceName().equals("Empty")) {
+                                return true;
+                            }
+                        }
+                        if (m.getMovementCol() == -1) {
+                            if (chessBoard[x.getRow() + 1][x.getCol() - 1].getColor() && !chessBoard[x.getRow() + 1][x.getCol() - 1].getPieceName().equals("Empty")) {
+                                return true;
+                            }
+                        }
+                        if (m.getMovementCol() == 0) {
                             return true;
                         }
-                    }
-                    if(m.getMovementCol()==0)
-                    {
-                        //System.out.println("h");
-                        return true;
                     }
                 }
             }
-            else
-            {
-                //System.out.println("b");
-                if (m.getMovementRow() == 1) {
-                    if (m.getMovementCol()==1) {
-                        if (chessBoard[x.getRow() + 1][x.getCol() + 1].getColor() && !chessBoard[x.getRow() + 1][x.getCol() + 1].getPieceName().equals("Empty")) {
-                            return true;
-                        }
-                    }
-                    if (m.getMovementCol()==-1) {
-                        if (chessBoard[x.getRow() + 1][x.getCol() - 1].getColor() && !chessBoard[x.getRow() + 1][x.getCol() - 1].getPieceName().equals("Empty")) {
-                            return true;
-                        }
-                    }
-                    if(m.getMovementCol()==0)
-                    {
+            if (x.getRow() + m.getMovementRow() >= 0 && x.getCol() + m.getMovementCol() >= 0 && x.getRow() + m.getMovementRow() < 8 && x.getCol() + m.getMovementCol() < 8) {
+                if (m.getMovementRow() == 0 && m.getMovementCol() == 0) {
+                    if (checkingIfBlocked) {
+                        System.out.println("You can't move a piece to its own spot!");
+                        checkingIfBlocked = false;
                         return true;
+                    } else {
+                        return false;
                     }
                 }
-            }
-        }
-        if (x.getRow() + m.getMovementRow() >= 0 && x.getCol() + m.getMovementCol() >= 0 && x.getRow() + m.getMovementRow() < 8 && x.getCol() + m.getMovementCol() < 8) {
-            if (m.getMovementRow() == 0 && m.getMovementCol() == 0) {
-                if(checkingIfBlocked) {
-                    System.out.println("You can't move a piece to its own spot!");
-                    return true;
-                }
-                else {
+                if (checkingIfBlocked && !chessBoard[x.getRow() + m.getMovementRow()][x.getCol() + m.getMovementCol()].getPieceName().equals("Empty") && chessBoard[x.getRow() + m.getMovementRow()][x.getCol() + m.getMovementCol()].getColor() == x.getColor()) {
+                    System.out.println("Blocked by a piece!");
+                    checkingIfBlocked = false;
                     return false;
                 }
-            }
-            if (checkingIfBlocked && !chessBoard[x.getRow() + m.getMovementRow()][x.getCol() + m.getMovementCol()].getPieceName().equals("Empty")&&chessBoard[x.getRow() + m.getMovementRow()][x.getCol() + m.getMovementCol()].getColor()==x.getColor()) {
-                System.out.println("Blocked by a piece!");
-                return false;
-            }
-            //System.out.println("Movement  " + m.getMovementRow() + " " + m.getMovementCol());
-            //System.out.println("By Piece At: " + x.getRow() + " " + x.getCol());
-            if (chessBoard[x.getRow() + m.getMovementRow()][x.getCol() + m.getMovementCol()].getColor() == x.getColor() && !chessBoard[x.getRow() + m.getMovementRow()][x.getCol() + m.getMovementCol()].getPieceName().equals("Empty")) {
-                System.out.println("Can not take piece of same Color!");
-                return false;
-            }
-            for (int i = 0; i < x.pieceMovement().length; i++) {
-                //System.out.println("Trying Possible Move: " + x.pieceMovement()[i].getMovementRow() + " " + x.pieceMovement()[i].getMovementCol());
+                //System.out.println("Movement  " + m.getMovementRow() + " " + m.getMovementCol());
+                //System.out.println("By Piece At: " + x.getRow() + " " + x.getCol());
+                if (chessBoard[x.getRow() + m.getMovementRow()][x.getCol() + m.getMovementCol()].getColor() == x.getColor() && !chessBoard[x.getRow() + m.getMovementRow()][x.getCol() + m.getMovementCol()].getPieceName().equals("Empty")) {
+                    System.out.println("Can not take piece of same Color!");
+                    return false;
+                }
+                for (int i = 0; i < x.pieceMovement().length; i++) {
+                    //System.out.println("Trying Possible Move: " + x.pieceMovement()[i].getMovementRow() + " " + x.pieceMovement()[i].getMovementCol());
 
-                int checkRow = 0;
-                int checkCol = 0;
+                    int checkRow = 0;
+                    int checkCol = 0;
 
-                if (m.getMovementCol() == x.pieceMovement()[i].getMovementCol() && m.getMovementRow() == x.pieceMovement()[i].getMovementRow()) {
+                    if (m.getMovementCol() == x.pieceMovement()[i].getMovementCol() && m.getMovementRow() == x.pieceMovement()[i].getMovementRow()) {
 
-                    if (x.getPieceName().equals("Knight")) {
-                        System.out.println("Valid Move.");
-                        return true;
-                    }
-                    if (m.getMovementRow() + x.getRow() > x.getRow()) {
-                        checkRow = -1;
-                    }
-                    if (m.getMovementRow() + x.getRow() < x.getRow()) {
-                        checkRow = 1;
-                    }
-                    if (m.getMovementCol() + x.getCol() > x.getCol()) {
-                        checkCol = -1;
-                    }
-                    if (m.getMovementCol() + x.getCol() < x.getCol()) {
-                        checkCol = 1;
-                    }
-                    if (m.getMovementCol() == 0) {
-                        Movement tempMov = new Movement(m.getMovementRow() + checkRow, 0);
-                        checkingIfBlocked = true;
-                        if (validMove(x, tempMov)) {
+                        if (x.getPieceName().equals("Knight")) {
                             System.out.println("Valid Move.");
                             return true;
                         }
-                        System.out.println("Illegal Move");
-                        return false;
-                    }
-                    if (m.getMovementRow() == 0) {
-                        Movement tempMov = new Movement(0, m.getMovementCol() + checkCol);
-                        checkingIfBlocked = true;
-                        if (validMove(x, tempMov)) {
-                            System.out.println("Valid Move.");
-                            return true;
+                        if (m.getMovementRow() + x.getRow() > x.getRow()) {
+                            checkRow = -1;
                         }
-                        System.out.println("Illegal Move");
-                        return false;
-                    } else {
-                        Movement tempMov = new Movement(m.getMovementRow() + checkRow, m.getMovementCol() + checkCol);
-                        checkingIfBlocked = true;
-                        if (validMove(x, tempMov)) {
-                            System.out.println("Valid Move.");
-                            return true;
+                        if (m.getMovementRow() + x.getRow() < x.getRow()) {
+                            checkRow = 1;
                         }
-                        System.out.println("Illegal Move");
-                        return false;
+                        if (m.getMovementCol() + x.getCol() > x.getCol()) {
+                            checkCol = -1;
+                        }
+                        if (m.getMovementCol() + x.getCol() < x.getCol()) {
+                            checkCol = 1;
+                        }
+                        if (m.getMovementCol() == 0) {
+                            Movement tempMov = new Movement(m.getMovementRow() + checkRow, 0);
+                            checkingIfBlocked = true;
+                            if (validMove(x, tempMov)) {
+                                System.out.println("Valid Move.");
+                                return true;
+                            }
+                            System.out.println("Illegal Move");
+                            return false;
+                        }
+                        if (m.getMovementRow() == 0) {
+                            Movement tempMov = new Movement(0, m.getMovementCol() + checkCol);
+                            checkingIfBlocked = true;
+                            if (validMove(x, tempMov)) {
+                                System.out.println("Valid Move.");
+                                return true;
+                            }
+                            System.out.println("Illegal Move");
+                            return false;
+                        } else {
+                            Movement tempMov = new Movement(m.getMovementRow() + checkRow, m.getMovementCol() + checkCol);
+                            checkingIfBlocked = true;
+                            if (validMove(x, tempMov)) {
+                                System.out.println("Valid Move.");
+                                return true;
+                            }
+                            System.out.println("Illegal Move");
+                            return false;
+                        }
                     }
                 }
             }
+            System.out.println("Illegal Move");
+            return false;
         }
-        System.out.println("Illegal Move");
+        System.out.println("Not your turn!");
         return false;
     }
 
@@ -196,6 +197,7 @@ public class Board {
                 x.moved();
             }
             takePiece(chessBoard[x.getRow() + m.getMovementRow()][x.getCol() + m.getMovementCol()], x);
+            turn = !x.getColor();
         } else System.out.println("Illegal Move");
     }
 
@@ -219,12 +221,19 @@ public class Board {
 
             for (int i = 0; i < chessBoard.length; i++) {
                 for (int j = 0; j < chessBoard[i].length; j++) {
+
                     if (inCheck(chessBoard[i][j])) {
-                        System.out.println("Can not put King in check!");
-                        chessBoard[attRow][attCol] = a;
-                        chessBoard[attRow][attCol].setLocation(attRow, attCol);
-                        chessBoard[defRow][defCol] = new Empty();
-                        return;
+                        if (chessBoard[i][j].getColor() == a.getColor()) {
+                            System.out.println("Can not put your own King in check!");
+                            chessBoard[attRow][attCol] = a;
+                            chessBoard[attRow][attCol].setLocation(attRow, attCol);
+                            chessBoard[defRow][defCol] = new Empty();
+                            return;
+                        }
+                        else if (chessBoard[i][j].getColor() != a.getColor()) {
+                            System.out.println(chessBoard[i][j].getColor() + " King is in check!");
+                            return;
+                        }
                     }
                 }
             }
@@ -248,17 +257,16 @@ public class Board {
         if (h.getPieceName().equals("King")) {
             for (Piece[] a : chessBoard) {
                 for (Piece b : a) {
-                    if (!b.getPieceName().equals("Empty")&&!b.getPieceName().equals("King")) {
+                    if (!b.getPieceName().equals("Empty") && !b.getPieceName().equals("King")) {
 
-                        attackerRow = h.getRow()-b.getRow();
-                        attackerCol = h.getCol()-b.getCol();
+                        attackerRow = h.getRow() - b.getRow();
+                        attackerCol = h.getCol() - b.getCol();
 
                         move = new Movement(attackerRow, attackerCol);
                         if (validMove(b, move)) {
                             System.out.println("In Check!");
                             return true;
                         }
-
                     }
                 }
             }
@@ -302,22 +310,19 @@ public class Board {
         for (Piece[] i : chessBoard) {
             output += j + " ";
             for (Piece h : i) {
-                if(!h.getPieceName().equals("Empty"))
-                {
+                if (!h.getPieceName().equals("Empty")) {
                     if (h.getColor()) {
                         colorH = "W";
                     } else {
                         colorH = "B";
                     }
-                }
-                else
+                } else
                     colorH = "";
                 pieceName = colorH + h.getPieceName();
-                while (pieceName.length()<8)
-                {
+                while (pieceName.length() < 8) {
                     pieceName += " ";
                 }
-                output+=pieceName;
+                output += pieceName;
             }
             output += "\n";
             j--;
@@ -325,8 +330,13 @@ public class Board {
         output += "     A      B       C       D       E       F       G      H";
         return output;
     }
+
     public Piece getPiece(int row, int col) {
         return chessBoard[row][col];
+    }
+
+    public boolean whoseTurn() {
+        return turn;
     }
 }
 
