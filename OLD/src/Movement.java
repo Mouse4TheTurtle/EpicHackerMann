@@ -1,3 +1,5 @@
+package src;
+
 public class Movement
 {
  private int movementRow;

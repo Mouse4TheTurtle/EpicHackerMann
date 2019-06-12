@@ -1,3 +1,5 @@
+package src;
+
 public class GameTesting {
     public static void main(String[] args) {
 
