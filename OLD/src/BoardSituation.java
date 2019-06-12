@@ -1,3 +1,5 @@
+package src;
+
 public class BoardSituation {
 
     private Board board;

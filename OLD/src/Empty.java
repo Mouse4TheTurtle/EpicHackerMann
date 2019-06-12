@@ -1,43 +1,21 @@
+package src;
+
 import java.util.ArrayList;
 
-public class Pawn extends Piece {
-    private double pieceValue = 1;
-    private String pieceName = "Pawn";
+public class Empty extends Piece {
+    private double pieceValue = 0;
+    private String pieceName = "Empty";
     private boolean color;
     private Movement[] movements;
     private int pieceCol;
     private int pieceRow;
-    private boolean firstMove = true;
     private ArrayList<BoardSituation> valuedSituations = new ArrayList<BoardSituation>();
     DataTransfer data = new DataTransfer(null, null);
 
     public Movement[] pieceMovement() {
+        movements = new Movement[1];
+        movements[0] = new Movement(0, 0);
 
-        if (firstMove=true)
-        {
-            movements = new Movement[2];
-            if (color) {
-                movements[0] = new Movement(-1, 0);
-                movements[1] = new Movement(-2, 0);
-            }
-            else
-            {
-                movements[0] = new Movement(1, 0);
-                movements[1] = new Movement(2, 0);
-            }
-        }
-
-        else
-        {
-            movements = new Movement[1];
-            if (color) {
-                movements[0] = new Movement(-1, 0);
-            }
-            else
-            {
-                movements[0] = new Movement(1, 0);
-            }
-        }
         return movements;
     }
 
@@ -51,10 +29,6 @@ public class Pawn extends Piece {
 
     public boolean getColor() {
         return color;
-    }
-
-    public void moved() {
-        firstMove = false;
     }
 
     public int getRow() {
@@ -94,7 +68,8 @@ public class Pawn extends Piece {
         pieceValue = data.readPtVal(this);
     }
 
-    public void setPieceValue(double val) {
+    public void setPieceValue(double val)
+    {
         pieceValue = val;
     }
 }

@@ -1,9 +1,10 @@
+package src;
+
 import java.util.ArrayList;
 
-public class Queen extends Piece
-{
-    private double pieceValue = 9;
-    private String pieceName = "Queen";
+public class Bishop extends Piece {
+    private double pieceValue = 3;
+    private String pieceName = "Bishop";
     private boolean color;
     private Movement[] movements;
     private int pieceCol;
@@ -12,26 +13,17 @@ public class Queen extends Piece
     DataTransfer data = new DataTransfer(null, null);
 
     public Movement[] pieceMovement() {
-        movements = new Movement[56];
+        movements = new Movement[7 * 4];
         int index = 0;
         for (int i = 0; index < movements.length; i++) {
-            movements[index] = new Movement(0, 1 + i);
-            index++;
-            movements[index] = new Movement(0, -1 - i);
-            index++;
-            movements[index] = new Movement(1 + i, 0);
-            index++;
             movements[index] = new Movement(1 + i, 1 + i);
             index++;
             movements[index] = new Movement(1 + i, -1 - i);
             index++;
             movements[index] = new Movement(-1 - i, 1 + i);
             index++;
-            movements[index] = new Movement(-1 - i, 0);
-            index++;
             movements[index] = new Movement(-1 - i, -1 - i);
             index++;
-
         }
         return movements;
     }
@@ -40,23 +32,19 @@ public class Queen extends Piece
         return pieceValue;
     }
 
-    public String getPieceName()
-    {
+    public String getPieceName() {
         return pieceName;
     }
 
-    public boolean getColor()
-    {
+    public boolean getColor() {
         return color;
     }
 
-    public int getRow()
-    {
+    public int getRow() {
         return pieceRow;
     }
 
-    public int getCol()
-    {
+    public int getCol() {
         return pieceCol;
     }
 
@@ -92,5 +80,9 @@ public class Queen extends Piece
 
     public void setPieceValue(double val) {
         pieceValue = val;
+    }
+
+    public void setValuedSituations(BoardSituation situation) {
+        valuedSituations.add(situation) ;
     }
 }

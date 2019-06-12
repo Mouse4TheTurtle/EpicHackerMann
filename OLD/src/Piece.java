@@ -1,8 +1,10 @@
+package src;
+
 import java.util.ArrayList;
 
-public class Bishop extends Piece {
-    private double pieceValue = 3;
-    private String pieceName = "Bishop";
+abstract class Piece {
+    private double pieceValue;
+    private String pieceName;
     private boolean color;
     private Movement[] movements;
     private int pieceCol;
@@ -11,18 +13,6 @@ public class Bishop extends Piece {
     DataTransfer data = new DataTransfer(null, null);
 
     public Movement[] pieceMovement() {
-        movements = new Movement[7 * 4];
-        int index = 0;
-        for (int i = 0; index < movements.length; i++) {
-            movements[index] = new Movement(1 + i, 1 + i);
-            index++;
-            movements[index] = new Movement(1 + i, -1 - i);
-            index++;
-            movements[index] = new Movement(-1 - i, 1 + i);
-            index++;
-            movements[index] = new Movement(-1 - i, -1 - i);
-            index++;
-        }
         return movements;
     }
 
@@ -38,6 +28,10 @@ public class Bishop extends Piece {
         return color;
     }
 
+    public void setColor(boolean x) {
+        color = x;
+    }
+
     public int getRow() {
         return pieceRow;
     }
@@ -46,14 +40,12 @@ public class Bishop extends Piece {
         return pieceCol;
     }
 
+    public void moved() {
+    }
+
     public void setLocation(int row, int col) {
         pieceCol = col;
         pieceRow = row;
-    }
-
-    public void setColor(boolean x)
-    {
-        color = x;
     }
 
     public ArrayList<BoardSituation> getValuedSituations() {
@@ -67,20 +59,21 @@ public class Bishop extends Piece {
                 valuedSituations.add(data.readBoardSituation(this,i)) ;
             }
         }
-        catch (NullPointerException e)
+        catch (IndexOutOfBoundsException e)
         {
         }
+    }
+
+    public void setValuedSituations(BoardSituation situation) {
+        valuedSituations.add(situation) ;
     }
 
     public void setPieceValue() {
         pieceValue = data.readPtVal(this);
     }
 
-    public void setPieceValue(double val) {
+    public void setPieceValue(double val)
+    {
         pieceValue = val;
-    }
-
-    public void setValuedSituations(BoardSituation situation) {
-        valuedSituations.add(situation) ;
     }
 }

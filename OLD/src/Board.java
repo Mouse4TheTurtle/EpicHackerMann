@@ -1,8 +1,14 @@
+package src;
+
 public class Board {
     private Piece[][] chessBoard;
     private double advantage = 0;
     private boolean checkingIfBlocked = false;
     private boolean turn = true;
+    int wQueenRow;
+    int wQueenCol;
+    int bQueenRow;
+    int bQueenCol;
 
     public Board() {
         chessBoard = new Piece[8][8];
@@ -24,6 +30,8 @@ public class Board {
         chessBoard[0][1] = new Knight();
         chessBoard[0][2] = new Bishop();
         chessBoard[0][3] = new Queen();
+        bQueenRow = 0;
+        bQueenCol = 3;
         chessBoard[0][4] = new King();
         chessBoard[0][5] = new Bishop();
         chessBoard[0][6] = new Knight();
@@ -33,6 +41,8 @@ public class Board {
         chessBoard[7][1] = new Knight();
         chessBoard[7][2] = new Bishop();
         chessBoard[7][3] = new Queen();
+        wQueenRow = 7;
+        wQueenCol = 3;
         chessBoard[7][4] = new King();
         chessBoard[7][5] = new Bishop();
         chessBoard[7][6] = new Knight();
@@ -202,8 +212,10 @@ public class Board {
     }
 
     public void takePiece(Piece d, Piece a) {
+
         boolean defendingColor = d.getColor();
         boolean attackingColor = a.getColor();
+
         System.out.println("Attempted Take By Piece At " + a.getRow() + " " + a.getCol() + " to " + d.getRow() + " " + d.getCol());
 
         if (defendingColor != attackingColor || d.getPieceName().equals("Empty")) {
@@ -219,23 +231,27 @@ public class Board {
             chessBoard[attRow][attCol] = new Empty();
             System.out.println(d.getPieceName());
 
-            for (int i = 0; i < chessBoard.length; i++) {
-                for (int j = 0; j < chessBoard[i].length; j++) {
 
-                    if (inCheck(chessBoard[i][j])) {
-                        if (chessBoard[i][j].getColor() == a.getColor()) {
-                            System.out.println("Can not put your own King in check!");
-                            chessBoard[attRow][attCol] = a;
-                            chessBoard[attRow][attCol].setLocation(attRow, attCol);
-                            chessBoard[defRow][defCol] = new Empty();
-                            return;
-                        }
-                        else if (chessBoard[i][j].getColor() != a.getColor()) {
-                            System.out.println(chessBoard[i][j].getColor() + " King is in check!");
-                            return;
-                        }
-                    }
-                }
+            if (inCheck(chessBoard[wQueenRow][wQueenCol])) {
+                if (a.getColor()) {
+                    System.out.println("Can not put your own King in check!");
+                    chessBoard[attRow][attCol] = a;
+                    chessBoard[attRow][attCol].setLocation(attRow, attCol);
+                    chessBoard[defRow][defCol] = new Empty();
+                    turn = a.getColor();
+                } else
+                    System.out.println(chessBoard[bQueenRow][bQueenCol].getColor() + " King is in check!");
+            }
+            if (inCheck(chessBoard[bQueenRow][bQueenCol])) {
+                if (!a.getColor()) {
+                    System.out.println("Can not put your own King in check!");
+                    chessBoard[attRow][attCol] = a;
+                    chessBoard[attRow][attCol].setLocation(attRow, attCol);
+                    chessBoard[defRow][defCol] = new Empty();
+                    turn = a.getColor();
+                } else
+                    System.out.println(chessBoard[wQueenRow][wQueenCol].getColor() + " King is in check!");
+
             }
             if (defendingColor) {
                 advantage -= d.getPieceValue();
@@ -263,6 +279,7 @@ public class Board {
                         attackerCol = h.getCol() - b.getCol();
 
                         move = new Movement(attackerRow, attackerCol);
+
                         if (validMove(b, move)) {
                             System.out.println("In Check!");
                             return true;

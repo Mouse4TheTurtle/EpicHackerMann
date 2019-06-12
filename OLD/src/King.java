@@ -1,8 +1,10 @@
+package src;
+
 import java.util.ArrayList;
 
-public class Empty extends Piece {
-    private double pieceValue = 0;
-    private String pieceName = "Empty";
+public class King extends Piece {
+    private double pieceValue = 100;
+    private String pieceName = "King";
     private boolean color;
     private Movement[] movements;
     private int pieceCol;
@@ -11,8 +13,16 @@ public class Empty extends Piece {
     DataTransfer data = new DataTransfer(null, null);
 
     public Movement[] pieceMovement() {
-        movements = new Movement[1];
-        movements[0] = new Movement(0, 0);
+        movements = new Movement[8];
+
+        movements[0] = new Movement(0, 1);
+        movements[1] = new Movement(0, -1);
+        movements[2] = new Movement(1, 0);
+        movements[3] = new Movement(1, 1);
+        movements[4] = new Movement(1, -1);
+        movements[5] = new Movement(-1, 1);
+        movements[6] = new Movement(-1, 0);
+        movements[7] = new Movement(-1, -1);
 
         return movements;
     }
@@ -66,8 +76,7 @@ public class Empty extends Piece {
         pieceValue = data.readPtVal(this);
     }
 
-    public void setPieceValue(double val)
-    {
+    public void setPieceValue(double val) {
         pieceValue = val;
     }
 }
