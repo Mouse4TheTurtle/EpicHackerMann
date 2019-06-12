@@ -4,16 +4,15 @@ public class Piece {
 
     private String name = "";
     private String color = "";
-    private double value = 0.0;
     private int row;
     private int col;
     private String[] possibleMoves;
     private ArrayList<int[]> moves;
     private int turnsSinceFirstMove = 0;
-    DataTransfer data = new DataTransfer();
-    Board board = new Board();
+    private DataTransfer data = new DataTransfer();
+    private Board board = new Board();
 
-    public Piece(String name, String color, double value, int row, int col) {
+    public Piece(String name, String color) {
         if(name.equals("Q"))
             name="Queen";
         if(name.equals("N"))
@@ -28,10 +27,15 @@ public class Piece {
             name="King";
         this.name = name;
         this.color = color;
-        this.value = value;
-        this.row = row;
-        this.col = col;
         moves = data.getMovements(name);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getColor(){
+        return color;
     }
 
     public void calcMoves(){
@@ -41,7 +45,7 @@ public class Piece {
         for (int i = 0; i<moves.size(); i++) {
                 moveRow = row + moves.get(i)[0];
                 moveCol = col + moves.get(i)[1];
-                possibleMoves[i] = "" + moveRow + board.translateCol(moveCol);
+                possibleMoves[i] = "" + board.translateCol(moveRow) + board.translateCol(moveCol);
         }
     }
 
