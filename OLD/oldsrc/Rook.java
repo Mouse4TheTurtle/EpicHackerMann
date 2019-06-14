@@ -1,44 +1,29 @@
-package src;
+package oldsrc;
 
 import java.util.ArrayList;
 
-public class Pawn extends Piece {
-    private double pieceValue = 1;
-    private String pieceName = "Pawn";
+public class Rook extends Piece {
+    private double pieceValue = 5;
+    private String pieceName = "Rook";
     private boolean color;
     private Movement[] movements;
     private int pieceCol;
     private int pieceRow;
-    private boolean firstMove = true;
     private ArrayList<BoardSituation> valuedSituations = new ArrayList<BoardSituation>();
-    DataTransfer data = new DataTransfer(null, null);
+    temprename data = new temprename(null, null);
 
     public Movement[] pieceMovement() {
-
-        if (firstMove=true)
-        {
-            movements = new Movement[2];
-            if (color) {
-                movements[0] = new Movement(-1, 0);
-                movements[1] = new Movement(-2, 0);
-            }
-            else
-            {
-                movements[0] = new Movement(1, 0);
-                movements[1] = new Movement(2, 0);
-            }
-        }
-
-        else
-        {
-            movements = new Movement[1];
-            if (color) {
-                movements[0] = new Movement(-1, 0);
-            }
-            else
-            {
-                movements[0] = new Movement(1, 0);
-            }
+        movements = new Movement[7 * 4];
+        int index = 0;
+        for (int i = 0; index < movements.length; i++) {
+            movements[index] = new Movement(0, 1 + i);
+            index++;
+            movements[index] = new Movement(0, -1 - i);
+            index++;
+            movements[index] = new Movement(1 + i, 0);
+            index++;
+            movements[index] = new Movement(-1 - i, 0);
+            index++;
         }
         return movements;
     }
@@ -53,10 +38,6 @@ public class Pawn extends Piece {
 
     public boolean getColor() {
         return color;
-    }
-
-    public void moved() {
-        firstMove = false;
     }
 
     public int getRow() {
@@ -90,6 +71,10 @@ public class Pawn extends Piece {
         catch (NullPointerException e)
         {
         }
+    }
+
+    public void setValuedSituations(BoardSituation situation) {
+                valuedSituations.add(situation) ;
     }
 
     public void setPieceValue() {

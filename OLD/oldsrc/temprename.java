@@ -1,19 +1,16 @@
-package src;
+package oldsrc;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-
-public class DataTransfer {
+public class temprename {
+    /*
     private String writeTo;
     private String readFrom;
     private Path workingDirectory = Paths.get("").toAbsolutePath();
     private File dataOutput;
     private File dataInput;
     private String[] pieceNames = new String[7];
-
-    public DataTransfer(String write, String read) {
+*/
+    public temprename(String write, String read) {
+        /*
         writeTo = write;
         readFrom = read;
         dataOutput = new File(workingDirectory + "\\data\\" + writeTo);
@@ -34,10 +31,10 @@ public class DataTransfer {
         pieceNames[3]="Knight";
         pieceNames[4]="Bishop";
         pieceNames[5]="Queen";
-        pieceNames[6]="King";
+        pieceNames[6]="King";*/
     }
 
-    public void writePieceData(Piece piece) {
+    public void writePieceData(Piece piece) {/*
         double pieceValue = piece.getPieceValue();
         String pieceName = piece.getPieceName();
         boolean color = piece.getColor();
@@ -59,10 +56,10 @@ public class DataTransfer {
             } catch (IOException e) {
                 System.err.println("Error");
             }
-        }
+        }*/
     }
 
-    public Movement readMove(String input) {
+    public Movement readMove(String input) {/*
         int col = 0;
         int row = 0;
 
@@ -82,11 +79,11 @@ public class DataTransfer {
                 e.printStackTrace();
                 return null;
             }
-        }
-        return new Movement(row, col);
+        }*/
+        return new Movement(1, 1);
     }
 
-    public double readPtVal(Piece piece) {
+    public double readPtVal(Piece piece) {/*
         double value = 0;
         boolean color = piece.getColor();
         String colorH = "";
@@ -108,19 +105,19 @@ public class DataTransfer {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-        return value;
+        }*/
+        return 1;
     }
 
     public String getDataOutput() {
-        return "" + workingDirectory + "\\" + writeTo;
+        return ""; //+ workingDirectory + "\\" + writeTo;
     }
 
     public String getDataInput() {
-        return "" + workingDirectory + "\\" + readFrom;
+        return ""; ///+ workingDirectory + "\\" + readFrom;
     }
 
-    public void writePieceMovements(Piece piece) {
+    public void writePieceMovements(Piece piece) {/*
         Movement[] movements = piece.pieceMovement();
 
         try {
@@ -134,11 +131,11 @@ public class DataTransfer {
             w.close();
         } catch (IOException e) {
             System.err.println("Error");
-        }
+        }*/
     }
 
     public BoardSituation readBoardSituation(Piece piece, int number) {
-
+/*
         BoardSituation situation = new BoardSituation();
         Board board = new Board();
         double value = 0;
@@ -208,11 +205,11 @@ public class DataTransfer {
         situation.setSituationPiece(piece);
         situation.setSituationBoard(board);
         situation.setSituationValue(value);
-        //System.out.println("Done Reading");
-        return situation;
+        //System.out.println("Done Reading");*/
+        return null;
     }
 
-    public void writeBoardSituation(Piece piece, Board board, double value) {
+    public void writeBoardSituation(Piece piece, Board board, double value) {/*
         int number = 0;
         String colorH = "";
         if (piece.getColor()) {
@@ -255,10 +252,10 @@ public class DataTransfer {
         } catch (IOException e) {
             System.err.println("Error while writing");
         }
-        System.out.println("Done Writing");
+        System.out.println("Done Writing");*/
     }
 
-    public void writeBoardSituation(BoardSituation situation) {
+    public void writeBoardSituation(BoardSituation situation) {/*
 
         Piece piece = situation.getSituationPiece();
         Board board = situation.getSituationBoard();
@@ -306,10 +303,10 @@ public class DataTransfer {
         } catch (IOException e) {
             System.err.println("Error while writing");
         }
-        System.out.println("Done Writing");
+        System.out.println("Done Writing");*/
     }
 
-    public Piece makePieceFromData(boolean color, String name) {
+    public Piece makePieceFromData(boolean color, String name) {/*
         Piece piece = new Empty();
         double value = 0;
         int row = 0;
@@ -359,11 +356,11 @@ public class DataTransfer {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-        return piece;
+        }*/
+        return null;
     }
 
-    public Piece makePieceFromData(boolean color, String name, int row, int col) {
+    public Piece makePieceFromData(boolean color, String name, int row, int col) {/*
         Piece piece = new Empty();
         double value = 0;
 
@@ -406,11 +403,11 @@ public class DataTransfer {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-        }
-        return piece;
+        }*/
+        return null;
     }
 
-    public Board readBoard(int number) {
+    public Board readBoard(int number) {/*
 
         BoardSituation situation = new BoardSituation();
         Board board = new Board();
@@ -467,11 +464,11 @@ public class DataTransfer {
             } catch (IOException e) {
                 //System.out.println("Error while closing reader");
             }
-        }
-        return board;
+        }*/
+        return null;
     }
 
-    public void writeBoard(Board board) {
+    public void writeBoard(Board board) {/*
 
         int number = 0;
 
@@ -511,6 +508,6 @@ public class DataTransfer {
         } catch (IOException e) {
             System.err.println("Error while writing");
         }
-        System.out.println("Done Writing");
+        System.out.println("Done Writing");*/
     }
 }

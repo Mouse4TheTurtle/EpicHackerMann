@@ -1,6 +1,5 @@
-package src;
+package oldsrc;
 
-import javax.xml.crypto.Data;
 import java.util.Scanner;
 
 public class Game {
@@ -8,7 +7,7 @@ public class Game {
         Board gamer = new Board();
         String response = "";
         Scanner keyboard = new Scanner(System.in);
-        DataTransfer data = new DataTransfer(null, null);
+        temprename data = new temprename(null, null);
 
         int x;
         int y;
