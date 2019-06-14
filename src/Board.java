@@ -174,12 +174,23 @@ public class Board {
         return false;
     }
 
+    public int isCastle(String movement){
+        if (movement.replaceAll("-","").length()==2){
+            return 1;
+        }
+        if (movement.replaceAll("-","").length()==3){
+            return 2;
+        }
+        return 0;
+    }
+
     private boolean validEnPassant(String movement) {
         return false;
     }
 
-    private boolean validCastle(String movement) {
-        return false;
+    private boolean validCastle(String movement, int side) {
+
+        return true;
     }
 
     public String interpretPieceName(String movement) {
@@ -206,7 +217,7 @@ public class Board {
     public void movePiece(String movement) {
         String name = interpretPieceName(movement);
         String move = interpretMove(movement);
-        String toPiece = "";
+        String toPiece = movement.substring(movement.length()-1);
         Piece piece = searchForPiece(name, translateColor(turn), move);
         System.out.println((piece.getName()+piece.getLocation(1)));
         if (!piece.getName().equals("Empty")) {
@@ -214,9 +225,19 @@ public class Board {
             if (isPromotion(movement)) {
                 promotion(piece, toPiece);
             }
+            if(isCastle(movement)>0)
+            {
+                if(validCastle(movement,isCastle(movement)))
+                {
+                    castle(movement);
+                }
+            }
         }
     }
 
+    public void castle(String movement){
+
+    }
     public boolean validMove(Piece piece, String move) {
         int x = translateCol(move.substring(0, 1));
         int y = translateRow(Integer.parseInt(move.substring(1)));
@@ -314,7 +335,10 @@ public class Board {
         int pieceX = Integer.parseInt(piece.getLocation(1).substring(1));
 
         gameBoard[y][x] = piece;
+        gameBoard[y][x].setLocation(y,x);
+        gameBoard[x][y].moved();
         gameBoard[pieceY][pieceX] = new Piece("Empty"," ");
+        gameBoard[pieceY][pieceX].setLocation(pieceY,pieceX);
         turn = !turn;
     }
 

@@ -41,14 +41,30 @@ public class Piece {
     public void calcMoves(){
         int moveRow;
         int moveCol;
-        if (name.equals("Pawn")&&color.equals("White"))
+        if (name.equals("Pawn"))
         {
-            int[] a = {-1,0};
-            moves.add(a);
-        }
-        for (int[] i : moves) {
-            //System.out.print(i[0]);
-            //System.out.println(i[1]);
+            if(color.equals("White")) {
+                int[] a = {-1, 0};
+                moves.set(0,a);
+            }
+            if(turnsSinceFirstMove==0){
+                if(color.equals("White")) {
+                    int[] a = {-2, 0};
+                    moves.add(1,a);
+                }
+                else
+                {
+                    int[] a = {2, 0};
+                    moves.add(1,a);
+                }
+            }
+            if(turnsSinceFirstMove>0)
+            {
+                if(moves.size()>1)
+                {
+                    moves.remove(1);
+                }
+            }
         }
         possibleMoves = new String[moves.size()];
         for (int i = 0; i<moves.size(); i++) {
@@ -57,6 +73,7 @@ public class Piece {
             possibleMoves[i] = "" + translateCol(moveCol) + translateRow(moveRow);
             //System.out.println(possibleMoves[i]);
         }
+
     }
 
     public String[] getPossibleMoves() {
@@ -78,9 +95,9 @@ public class Piece {
         this.col = col;
     }
 
-    public void setLocation(String locations){
-        this.row = translateRow(Integer.parseInt(locations.substring(1)));
-        this.col = translateCol(locations.substring(0,1));
+    public void setLocation(String location){
+        this.row = translateRow(Integer.parseInt(location.substring(1)));
+        this.col = translateCol(location.substring(0,1));
     }
 
     public String getLocation(String string){
