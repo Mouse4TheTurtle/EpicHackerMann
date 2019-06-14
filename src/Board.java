@@ -210,6 +210,7 @@ public class Board {
         Piece piece = searchForPiece(name, translateColor(turn), move);
         System.out.println((piece.getName()+piece.getLocation(1)));
         if (!piece.getName().equals("Empty")) {
+            System.out.println("Not Empty");
             takePiece(piece, move);
             if (isPromotion(movement)) {
                 promotion(piece, toPiece);
@@ -220,8 +221,8 @@ public class Board {
     public boolean validMove(Piece piece, String move) {
         int x = translateCol(move.substring(0, 1));
         int y = translateRow(Integer.parseInt(move.substring(1)));
-        int pieceX = Integer.parseInt(piece.getLocation(1).substring(0, 1));
-        int pieceY = Integer.parseInt(piece.getLocation(1).substring(1));
+        int pieceY = Integer.parseInt(piece.getLocation(1).substring(0, 1));
+        int pieceX = Integer.parseInt(piece.getLocation(1).substring(1));
         int rowDirection = 0;
         int colDirection = 0;
 
@@ -232,18 +233,27 @@ public class Board {
             colDirection = 1;
         }
         if (pieceY > y) {
-            rowDirection = 1;
-        } else if (pieceY < y) {
             rowDirection = -1;
+        } else if (pieceY < y) {
+            rowDirection = 1;
         }
 
+        //System.out.println(pieceX);
+        //System.out.println(pieceY);
+        //System.out.println(x);
+        //System.out.println(y);
         int moveToX = pieceX + (x * colDirection);
         int moveToY = pieceY + (y * rowDirection);
+        //System.out.println(moveToX);
+        //System.out.println(moveToY);
 
         for (String i : piece.getPossibleMoves()) {
             //System.out.println(i);
             //System.out.println(i.equals(move) && !blockedMove(piece, move));
             if (i.equals(move)) {
+                //System.out.println(i.equals(move));
+                //System.out.println("h" + !translateColor(getPiece(""+moveToX+moveToY).getColor()));
+                //System.out.println("h" + getPiece(""+moveToX+moveToY).getName().equals("Empty"));
                 if(translateColor(getPiece(""+moveToX+moveToY).getColor())!=turn||getPiece(""+moveToX+moveToY).getName().equals("Empty")) {
                     System.out.println("Valid Move");
                     return true;
@@ -289,6 +299,7 @@ public class Board {
 
         String move = "" + translateRow(y + rowDirection) + translateCol(x + colDirection);
         if (validMove(piece, move)) {
+            System.out.println("valid move h");
             return false;
         }
         else
@@ -296,14 +307,29 @@ public class Board {
     }
 
     private void takePiece(Piece piece, String move) {
+        System.out.println("Taking Piece");
         int x = translateCol(move.substring(0, 1));
         int y = translateRow(Integer.parseInt(move.substring(1)));
-        int pieceX = Integer.parseInt(piece.getLocation(1).substring(0, 1));
-        int pieceY = Integer.parseInt(piece.getLocation(1).substring(1));
+        int pieceY = Integer.parseInt(piece.getLocation(1).substring(0, 1));
+        int pieceX = Integer.parseInt(piece.getLocation(1).substring(1));
         int rowDirection = 0;
         int colDirection = 0;
 
-        gameBoard[pieceY+y][pieceX+x] = piece;
+        if (pieceX > x) {
+            colDirection = -1;
+        } else if (pieceX < x) {
+            colDirection = 1;
+        }
+        if (pieceY > y) {
+            rowDirection = -1;
+        } else if (pieceY < y) {
+            rowDirection = 1;
+        }
+
+        int moveToX = pieceX + (x * colDirection);
+        int moveToY = pieceY + (y * rowDirection);
+
+        gameBoard[moveToY][moveToX] = piece;
         gameBoard[pieceY][pieceX] = new Piece("Empty"," ");
     }
 
@@ -375,8 +401,8 @@ public class Board {
     }
 
     public Piece getPiece(String location){
-        int row = Integer.parseInt(location.substring(0,1));
-        int col = Integer.parseInt(location.substring(1));
+        int col = Integer.parseInt(location.substring(0,1));
+        int row = Integer.parseInt(location.substring(1));
         return gameBoard[row][col];
     }
 

@@ -18,19 +18,24 @@ public class DataTransfer {
         try {
             reader = new BufferedReader(new FileReader(workingDirectory + "\\data\\Movements\\" + pieceName + ".txt"));
             String line = reader.readLine();
-            int[] movement = new int[2];
+
             int row = 0;
             int col = 0;
+
             String rowS = "";
             String colS = "";
             while (line != null) {
+                int[] movement = new int[2];
                 rowS = line.substring(0, 1);
-                colS = line.substring(1, 2);
+                colS = line.substring(1);
 
                 if (rowS.equals("-")) {
                     rowS = line.substring(0, 2);
                     colS = line.substring(2);
                 }
+
+                //System.out.print(rowS);
+                //System.out.println(colS);
 
                 row = Integer.parseInt(rowS);
                 col = Integer.parseInt(colS);
@@ -42,6 +47,7 @@ public class DataTransfer {
                 line = reader.readLine();
             }
         } catch (IOException e) {
+
             e.printStackTrace();
         } finally {
             try {
@@ -50,10 +56,7 @@ public class DataTransfer {
                 e.printStackTrace();
             }
         }
-        for (int[] i : output) {
-            System.out.print(i[0]);
-            System.out.println(i[1]);
-        }
+
         return output;
     }
 

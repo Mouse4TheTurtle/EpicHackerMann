@@ -52,8 +52,6 @@ public class Piece {
         }
         possibleMoves = new String[moves.size()];
         for (int i = 0; i<moves.size(); i++) {
-            //System.out.print(moves.get(i)[0]);
-            //System.out.println(moves.get(i)[1]);
             moveRow = row + moves.get(i)[0];
             moveCol = col + moves.get(i)[1];
             possibleMoves[i] = "" + translateCol(moveCol) + translateRow(moveRow);

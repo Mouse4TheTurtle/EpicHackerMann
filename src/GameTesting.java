@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 public class GameTesting {
     public static void main(String[] args) {
-        /*
+
         Board game = new Board();
         Scanner keyboard = new Scanner(System.in);
         System.out.println("Begin game? ");
@@ -14,12 +14,6 @@ public class GameTesting {
                 input = keyboard.nextLine();
                 game.movePiece(input);
             }
-        }*/
-        Piece piece = new Piece("Knight", "White");
-        piece.setLocation("b1");
-        piece.calcMoves();
-        for (String i : piece.getPossibleMoves()) {
-            //System.out.println(i);
         }
     }
 }
