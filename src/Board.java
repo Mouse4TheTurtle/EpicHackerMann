@@ -1,7 +1,7 @@
 public class Board {
 
     private Piece[][] gameBoard;
-    private boolean turn = true ;
+    private boolean turn = true;
 
     public Board() {
 
@@ -9,11 +9,11 @@ public class Board {
 
         for (int i = 0; i < gameBoard.length; i++) {
             gameBoard[1][i] = new Piece("Pawn", "Black");
-            gameBoard[1][i].setLocation(1,i);
+            gameBoard[1][i].setLocation(1, i);
             gameBoard[6][i] = new Piece("Pawn", "White");
-            gameBoard[6][i].setLocation(6,i);
+            gameBoard[6][i].setLocation(6, i);
         }
-        
+
         gameBoard[0][0] = new Piece("Rook", "Black");
         gameBoard[0][1] = new Piece("Knight", "Black");
         gameBoard[0][2] = new Piece("Bishop", "Black");
@@ -22,16 +22,16 @@ public class Board {
         gameBoard[0][5] = new Piece("Bishop", "Black");
         gameBoard[0][6] = new Piece("Knight", "Black");
         gameBoard[0][7] = new Piece("Rook", "Black");
-        
-        gameBoard[0][0].setLocation(0,0);
-        gameBoard[0][1].setLocation(0,1);
-        gameBoard[0][2].setLocation(0,2);
-        gameBoard[0][3].setLocation(0,3);
-        gameBoard[0][4].setLocation(0,4);
-        gameBoard[0][5].setLocation(0,5);
-        gameBoard[0][6].setLocation(0,6);
-        gameBoard[0][7].setLocation(0,7);
-        
+
+        gameBoard[0][0].setLocation(0, 0);
+        gameBoard[0][1].setLocation(0, 1);
+        gameBoard[0][2].setLocation(0, 2);
+        gameBoard[0][3].setLocation(0, 3);
+        gameBoard[0][4].setLocation(0, 4);
+        gameBoard[0][5].setLocation(0, 5);
+        gameBoard[0][6].setLocation(0, 6);
+        gameBoard[0][7].setLocation(0, 7);
+
         gameBoard[7][0] = new Piece("Rook", "White");
         gameBoard[7][1] = new Piece("Knight", "White");
         gameBoard[7][2] = new Piece("Bishop", "White");
@@ -41,19 +41,19 @@ public class Board {
         gameBoard[7][6] = new Piece("Knight", "White");
         gameBoard[7][7] = new Piece("Rook", "White");
 
-        gameBoard[7][0].setLocation(7,0);
-        gameBoard[7][1].setLocation(7,1);
-        gameBoard[7][2].setLocation(7,2);
-        gameBoard[7][3].setLocation(7,3);
-        gameBoard[7][4].setLocation(7,4);
-        gameBoard[7][5].setLocation(7,5);
-        gameBoard[7][6].setLocation(7,6);
-        gameBoard[7][7].setLocation(7,7);
-        
+        gameBoard[7][0].setLocation(7, 0);
+        gameBoard[7][1].setLocation(7, 1);
+        gameBoard[7][2].setLocation(7, 2);
+        gameBoard[7][3].setLocation(7, 3);
+        gameBoard[7][4].setLocation(7, 4);
+        gameBoard[7][5].setLocation(7, 5);
+        gameBoard[7][6].setLocation(7, 6);
+        gameBoard[7][7].setLocation(7, 7);
+
         for (int i = 2; i < 6; i++) {
             for (int b = 0; b < 8; b++) {
                 gameBoard[i][b] = new Piece("Empty", " ");
-                gameBoard[i][b].setLocation(i,b);
+                gameBoard[i][b].setLocation(i, b);
 
             }
         }
@@ -174,23 +174,49 @@ public class Board {
         return false;
     }
 
-    public int isCastle(String movement){
-        if (movement.replaceAll("-","").length()==2){
-            return 1;
-        }
-        if (movement.replaceAll("-","").length()==3){
-            return 2;
+    public int isCastle(String movement) {
+        if (movement.contains("o")) {
+            if (movement.replaceAll("-", "").length() == 2) {
+                return 1;
+            }
+            if (movement.replaceAll("-", "").length() == 3) {
+                return 2;
+            }
         }
         return 0;
     }
 
-    private boolean validEnPassant(String movement) {
+    public boolean validEnPassant(String movement) {
         return false;
     }
 
-    private boolean validCastle(String movement, int side) {
-
-        return true;
+    public boolean validCastle(String movement, int type, boolean color) {
+        if (type == 1) {
+            if (color) {
+                if (gameBoard[7][4].getTurnsSinceFirstMove() == 0 && gameBoard[7][7].getTurnsSinceFirstMove() == 0) {
+                    return true;
+                } else
+                    return false;
+            } else {
+                if (gameBoard[0][4].getTurnsSinceFirstMove() == 0 && gameBoard[0][7].getTurnsSinceFirstMove() == 0) {
+                    return true;
+                } else
+                    return false;
+            }
+        } else if (type == 2) {
+            if (color) {
+                if (gameBoard[7][4].getTurnsSinceFirstMove() == 0 && gameBoard[7][0].getTurnsSinceFirstMove() == 0) {
+                    return true;
+                } else
+                    return false;
+            } else {
+                if (gameBoard[0][4].getTurnsSinceFirstMove() == 0 && gameBoard[0][0].getTurnsSinceFirstMove() == 0) {
+                    return true;
+                } else
+                    return false;
+            }
+        }
+        return false;
     }
 
     public String interpretPieceName(String movement) {
@@ -217,27 +243,51 @@ public class Board {
     public void movePiece(String movement) {
         String name = interpretPieceName(movement);
         String move = interpretMove(movement);
-        String toPiece = movement.substring(movement.length()-1);
+        String toPiece = movement.substring(movement.length() - 1);
+        int cast = isCastle(movement);
         Piece piece = searchForPiece(name, translateColor(turn), move);
-        System.out.println((piece.getName()+piece.getLocation(1)));
+        System.out.println((piece.getName() + piece.getLocation(1)));
         if (!piece.getName().equals("Empty")) {
             takePiece(piece, move);
             if (isPromotion(movement)) {
                 promotion(piece, toPiece);
             }
-            if(isCastle(movement)>0)
-            {
-                if(validCastle(movement,isCastle(movement)))
-                {
-                    castle(movement);
+            if (cast > 0) {
+                if (validCastle(movement, cast, turn)) {
+                    castle(cast, turn);
                 }
             }
         }
     }
 
-    public void castle(String movement){
-
+    private void castle(int type, boolean color) {
+        if (type == 1) {
+            if (color) {
+                gameBoard[7][6] = gameBoard[7][4];
+                gameBoard[7][7] = gameBoard[7][5];
+                gameBoard[7][4].setLocation(7, 4);
+                gameBoard[7][5].setLocation(7, 5);
+            } else {
+                gameBoard[0][6] = gameBoard[0][4];
+                gameBoard[0][7] = gameBoard[0][5];
+                gameBoard[0][4].setLocation(0, 4);
+                gameBoard[0][5].setLocation(0, 5);
+            }
+        } else if (type == 2) {
+            if (color) {
+                gameBoard[7][6] = gameBoard[7][2];
+                gameBoard[7][0] = gameBoard[7][3];
+                gameBoard[7][2].setLocation(7, 2);
+                gameBoard[7][3].setLocation(7, 3);
+            } else {
+                gameBoard[0][6] = gameBoard[0][2];
+                gameBoard[0][0] = gameBoard[0][3];
+                gameBoard[0][2].setLocation(0, 2);
+                gameBoard[0][3].setLocation(0, 3);
+            }
+        }
     }
+
     public boolean validMove(Piece piece, String move) {
         int x = translateCol(move.substring(0, 1));
         int y = translateRow(Integer.parseInt(move.substring(1)));
@@ -274,12 +324,10 @@ public class Board {
                 //System.out.println(i.equals(move));
                 //System.out.println("h" + !translateColor(getPiece(""+moveToX+moveToY).getColor()));
                 //System.out.println("h" + getPiece(""+moveToX+moveToY).getName().equals("Empty"));
-                if(translateColor(getPiece(""+moveToX+moveToY).getColor())!=turn||getPiece(""+moveToX+moveToY).getName().equals("Empty")) {
+                if (translateColor(getPiece("" + moveToX + moveToY).getColor()) != turn || getPiece("" + moveToX + moveToY).getName().equals("Empty")) {
                     System.out.println("Valid Move");
                     return true;
-                }
-                else
-                {
+                } else {
                     System.out.println("invalid move");
                     return false;
                 }
@@ -291,8 +339,7 @@ public class Board {
 
     public boolean blockedMove(Piece piece, String movement) {
 
-        if(piece.getName().equals("Knight"))
-        {
+        if (piece.getName().equals("Knight")) {
             return false;
         }
         int x = translateCol(movement.substring(0, 1));
@@ -303,7 +350,7 @@ public class Board {
         int colDirection = 0;
 
 
-        if(pieceX==x&&pieceY==y)
+        if (pieceX == x && pieceY == y)
             return false;
 
         if (pieceX > x) {
@@ -321,8 +368,7 @@ public class Board {
         if (validMove(piece, move)) {
             System.out.println("valid move h");
             return false;
-        }
-        else
+        } else
             return true;
     }
 
@@ -335,10 +381,10 @@ public class Board {
         int pieceX = Integer.parseInt(piece.getLocation(1).substring(1));
 
         gameBoard[y][x] = piece;
-        gameBoard[y][x].setLocation(y,x);
+        gameBoard[y][x].setLocation(y, x);
         gameBoard[x][y].moved();
-        gameBoard[pieceY][pieceX] = new Piece("Empty"," ");
-        gameBoard[pieceY][pieceX].setLocation(pieceY,pieceX);
+        gameBoard[pieceY][pieceX] = new Piece("Empty", " ");
+        gameBoard[pieceY][pieceX].setLocation(pieceY, pieceX);
         turn = !turn;
     }
 
@@ -346,7 +392,7 @@ public class Board {
 
     }
 
-    private boolean inCheck(){
+    private boolean inCheck() {
         return true;
     }
 
@@ -366,7 +412,7 @@ public class Board {
                 //System.out.println(gameBoard[i][j].getColor().equals(color));
                 //System.out.println(gameBoard[i][j].translateName().equals(name.substring(0,1)));
                 //System.out.println(validMove(gameBoard[i][j], move));
-                if (gameBoard[i][j].getColor().equals(color)&&gameBoard[i][j].translateName().equals(name.substring(0,1))&&validMove(gameBoard[i][j], move)) {
+                if (gameBoard[i][j].getColor().equals(color) && gameBoard[i][j].translateName().equals(name.substring(0, 1)) && validMove(gameBoard[i][j], move)) {
                     System.out.println("valid");
                     row = i;
                     col = j;
@@ -409,8 +455,8 @@ public class Board {
         return output;
     }
 
-    public Piece getPiece(String location){
-        int col = Integer.parseInt(location.substring(0,1));
+    public Piece getPiece(String location) {
+        int col = Integer.parseInt(location.substring(0, 1));
         int row = Integer.parseInt(location.substring(1));
         return gameBoard[row][col];
     }

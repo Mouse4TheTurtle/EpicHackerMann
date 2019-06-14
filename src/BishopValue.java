@@ -11,7 +11,7 @@ public class BishopValue {
         for (int i = 0; game.getGameBoard().length > i; i++) {
             for (int j = 0; j < game.getGameBoard()[i].length; ) {
                 if(game.getGameBoard()[i][j].getName().equals("Bishop")) {
-                    if()
+                    //if()
                 }
             }
         }

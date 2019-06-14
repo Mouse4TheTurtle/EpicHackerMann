@@ -6,7 +6,7 @@ public class Engine {
         double blackValue = 0;
 
         game.getGameBoard();
-        game.movePiece("c3");
+        game.movePiece(" c3");
 
     }
 }
