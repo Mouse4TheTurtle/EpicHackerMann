@@ -29,14 +29,7 @@ public class DataTransfer {
 
                 if (rowS.equals("-")) {
                     rowS = line.substring(0, 2);
-                    colS = line.substring(2, 3);
-                }
-                if (colS.equals("-")) {
-                    if(rowS.contains("-")) {
-                        colS = line.substring(2);
-                    }
-                    else
-                        colS = line.substring(1);
+                    colS = line.substring(2);
                 }
 
                 row = Integer.parseInt(rowS);
@@ -49,11 +42,17 @@ public class DataTransfer {
                 line = reader.readLine();
             }
         } catch (IOException e) {
+            e.printStackTrace();
         } finally {
             try {
                 reader.close();
             } catch (IOException e) {
+                e.printStackTrace();
             }
+        }
+        for (int[] i : output) {
+            System.out.print(i[0]);
+            System.out.println(i[1]);
         }
         return output;
     }
