@@ -1,7 +1,7 @@
 
 
 public class BishopValue {
-    private static Board game = new Board();
+    private Board game = new Board();
     private double blackBishopPlacementValue1 = 0.0;
     private double blackBishopPlacementValue2 = 0.0;
     private double blackBishopPlacementValueTotal = 0.0;
@@ -16,7 +16,7 @@ public class BishopValue {
 
     }
 
-    public static void blackBishopPlacementValue() {
+    public void blackBishopPlacementValue() {
         for (int i = 0; game.getGameBoard().length > i; i++) {
             for (int j = 0; j < game.getGameBoard()[i].length; ) {
                 if (game.getGameBoard()[i][j].getName().equals("Bishop") ||
@@ -30,10 +30,9 @@ public class BishopValue {
                 }
             }
         }
-
     }
 
-    public static double whiteBishopPlacementValue() {
+    public double whiteBishopPlacementValue() {
         for (int i = 0; game.getGameBoard().length > i; i++) {
             for (int j = 0; j < game.getGameBoard()[i].length; ) {
                 if (game.getGameBoard()[i][j].getName().equals("Bishop") ||
