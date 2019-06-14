@@ -210,7 +210,6 @@ public class Board {
         Piece piece = searchForPiece(name, translateColor(turn), move);
         System.out.println((piece.getName()+piece.getLocation(1)));
         if (!piece.getName().equals("Empty")) {
-            System.out.println("Not Empty");
             takePiece(piece, move);
             if (isPromotion(movement)) {
                 promotion(piece, toPiece);
@@ -308,29 +307,15 @@ public class Board {
 
     private void takePiece(Piece piece, String move) {
         System.out.println("Taking Piece");
+        System.out.println(move);
         int x = translateCol(move.substring(0, 1));
         int y = translateRow(Integer.parseInt(move.substring(1)));
         int pieceY = Integer.parseInt(piece.getLocation(1).substring(0, 1));
         int pieceX = Integer.parseInt(piece.getLocation(1).substring(1));
-        int rowDirection = 0;
-        int colDirection = 0;
 
-        if (pieceX > x) {
-            colDirection = -1;
-        } else if (pieceX < x) {
-            colDirection = 1;
-        }
-        if (pieceY > y) {
-            rowDirection = -1;
-        } else if (pieceY < y) {
-            rowDirection = 1;
-        }
-
-        int moveToX = pieceX + (x * colDirection);
-        int moveToY = pieceY + (y * rowDirection);
-
-        gameBoard[moveToY][moveToX] = piece;
+        gameBoard[y][x] = piece;
         gameBoard[pieceY][pieceX] = new Piece("Empty"," ");
+        turn = !turn;
     }
 
     private void promotion(Piece piece, String toPiece) {
