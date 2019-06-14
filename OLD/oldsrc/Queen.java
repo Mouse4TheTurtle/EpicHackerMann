@@ -1,29 +1,39 @@
-package src;
+package oldsrc;
 
 import java.util.ArrayList;
 
-public class Bishop extends Piece {
-    private double pieceValue = 3;
-    private String pieceName = "Bishop";
+public class Queen extends Piece
+{
+    private double pieceValue = 9;
+    private String pieceName = "Queen";
     private boolean color;
     private Movement[] movements;
     private int pieceCol;
     private int pieceRow;
     private ArrayList<BoardSituation> valuedSituations = new ArrayList<BoardSituation>();
-    DataTransfer data = new DataTransfer(null, null);
+    temprename data = new temprename(null, null);
 
     public Movement[] pieceMovement() {
-        movements = new Movement[7 * 4];
+        movements = new Movement[56];
         int index = 0;
         for (int i = 0; index < movements.length; i++) {
+            movements[index] = new Movement(0, 1 + i);
+            index++;
+            movements[index] = new Movement(0, -1 - i);
+            index++;
+            movements[index] = new Movement(1 + i, 0);
+            index++;
             movements[index] = new Movement(1 + i, 1 + i);
             index++;
             movements[index] = new Movement(1 + i, -1 - i);
             index++;
             movements[index] = new Movement(-1 - i, 1 + i);
             index++;
+            movements[index] = new Movement(-1 - i, 0);
+            index++;
             movements[index] = new Movement(-1 - i, -1 - i);
             index++;
+
         }
         return movements;
     }
@@ -32,19 +42,23 @@ public class Bishop extends Piece {
         return pieceValue;
     }
 
-    public String getPieceName() {
+    public String getPieceName()
+    {
         return pieceName;
     }
 
-    public boolean getColor() {
+    public boolean getColor()
+    {
         return color;
     }
 
-    public int getRow() {
+    public int getRow()
+    {
         return pieceRow;
     }
 
-    public int getCol() {
+    public int getCol()
+    {
         return pieceCol;
     }
 
@@ -80,9 +94,5 @@ public class Bishop extends Piece {
 
     public void setPieceValue(double val) {
         pieceValue = val;
-    }
-
-    public void setValuedSituations(BoardSituation situation) {
-        valuedSituations.add(situation) ;
     }
 }

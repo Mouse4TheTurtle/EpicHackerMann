@@ -1,12 +1,69 @@
-import java.util.function.BinaryOperator;
-
 public class Board {
 
     private Piece[][] gameBoard;
-    private boolean turn;
+    private boolean turn = true ;
 
-    public Board(){
+    public Board() {
 
+        gameBoard = new Piece[8][8];
+
+        for (int i = 0; i < gameBoard.length; i++) {
+            gameBoard[1][i] = new Piece("Pawn", "Black");
+            gameBoard[1][i].setLocation(1,i);
+            gameBoard[6][i] = new Piece("Pawn", "White");
+            gameBoard[6][i].setLocation(6,i);
+        }
+        
+        gameBoard[0][0] = new Piece("Rook", "Black");
+        gameBoard[0][1] = new Piece("Knight", "Black");
+        gameBoard[0][2] = new Piece("Bishop", "Black");
+        gameBoard[0][3] = new Piece("Queen", "Black");
+        gameBoard[0][4] = new Piece("King", "Black");
+        gameBoard[0][5] = new Piece("Bishop", "Black");
+        gameBoard[0][6] = new Piece("Knight", "Black");
+        gameBoard[0][7] = new Piece("Rook", "Black");
+        
+        gameBoard[0][0].setLocation(0,0);
+        gameBoard[0][1].setLocation(0,1);
+        gameBoard[0][2].setLocation(0,2);
+        gameBoard[0][3].setLocation(0,3);
+        gameBoard[0][4].setLocation(0,4);
+        gameBoard[0][5].setLocation(0,5);
+        gameBoard[0][6].setLocation(0,6);
+        gameBoard[0][7].setLocation(0,7);
+        
+        gameBoard[7][0] = new Piece("Rook", "White");
+        gameBoard[7][1] = new Piece("Knight", "White");
+        gameBoard[7][2] = new Piece("Bishop", "White");
+        gameBoard[7][3] = new Piece("Queen", "White");
+        gameBoard[7][4] = new Piece("King", "White");
+        gameBoard[7][5] = new Piece("Bishop", "White");
+        gameBoard[7][6] = new Piece("Knight", "White");
+        gameBoard[7][7] = new Piece("Rook", "White");
+
+        gameBoard[7][0].setLocation(7,0);
+        gameBoard[7][1].setLocation(7,1);
+        gameBoard[7][2].setLocation(7,2);
+        gameBoard[7][3].setLocation(7,3);
+        gameBoard[7][4].setLocation(7,4);
+        gameBoard[7][5].setLocation(7,5);
+        gameBoard[7][6].setLocation(7,6);
+        gameBoard[7][7].setLocation(7,7);
+        
+        for (int i = 2; i < 6; i++) {
+            for (int b = 0; b < 8; b++) {
+                gameBoard[i][b] = new Piece("Empty", " ");
+                gameBoard[i][b].setLocation(i,b);
+
+            }
+        }
+
+        for (int i = 0; i < gameBoard.length; i++) {
+            for (int j = 0; j < gameBoard[i].length; j++) {
+                gameBoard[i][j].setLocation(i, j);
+                //System.out.println(gameBoard[i][j].getName()+gameBoard[i][j].getLocation("h")+gameBoard[i][j].getLocation(1));
+            }
+        }
     }
 
     public int translateRow(int row) {
@@ -29,6 +86,8 @@ public class Board {
             y = 6;
         else if (row == 1)
             y = 7;
+        else if (row == 0)
+            y = 8;
 
         return y;
     }
@@ -84,8 +143,10 @@ public class Board {
     public String translateColor(boolean color) {
         if (color)
             return "White";
-        else
+        else if (!color)
             return "Black";
+        else
+            return " ";
     }
 
     public boolean translateColor(String color) {
@@ -110,6 +171,14 @@ public class Board {
                 return true;
             }
         }
+        return false;
+    }
+
+    private boolean validEnPassant(String movement) {
+        return false;
+    }
+
+    private boolean validCastle(String movement) {
         return false;
     }
 
@@ -139,7 +208,8 @@ public class Board {
         String move = interpretMove(movement);
         String toPiece = "";
         Piece piece = searchForPiece(name, translateColor(turn), move);
-        if (piece != null) {
+        System.out.println((piece.getName()+piece.getLocation(1)));
+        if (!piece.getName().equals("Empty")) {
             takePiece(piece, move);
             if (isPromotion(movement)) {
                 promotion(piece, toPiece);
@@ -148,63 +218,134 @@ public class Board {
     }
 
     public boolean validMove(Piece piece, String move) {
+        int x = translateCol(move.substring(0, 1));
+        int y = translateRow(Integer.parseInt(move.substring(1)));
+        int pieceX = Integer.parseInt(piece.getLocation(1).substring(0, 1));
+        int pieceY = Integer.parseInt(piece.getLocation(1).substring(1));
+        int rowDirection = 0;
+        int colDirection = 0;
+
+
+        if (pieceX > x) {
+            colDirection = -1;
+        } else if (pieceX < x) {
+            colDirection = 1;
+        }
+        if (pieceY > y) {
+            rowDirection = 1;
+        } else if (pieceY < y) {
+            rowDirection = -1;
+        }
+
+        int moveToX = pieceX + (x * colDirection);
+        int moveToY = pieceY + (y * rowDirection);
+
         for (String i : piece.getPossibleMoves()) {
-            if(i.equals(move))
-            {
-                return true;
+            //System.out.println(i);
+            //System.out.println(i.equals(move) && !blockedMove(piece, move));
+            if (i.equals(move)) {
+                if(translateColor(getPiece(""+moveToX+moveToY).getColor())!=turn||getPiece(""+moveToX+moveToY).getName().equals("Empty")) {
+                    System.out.println("Valid Move");
+                    return true;
+                }
+                else
+                {
+                    System.out.println("invalid move");
+                    return false;
+                }
+
             }
         }
         return false;
     }
 
-    public boolean blockedMove(String name, String movement) {
-        return true;
+    public boolean blockedMove(Piece piece, String movement) {
+
+        if(piece.getName().equals("Knight"))
+        {
+            return false;
+        }
+        int x = translateCol(movement.substring(0, 1));
+        int y = translateRow(Integer.parseInt(movement.substring(1)));
+        int pieceX = Integer.parseInt(piece.getLocation(1).substring(0, 1));
+        int pieceY = Integer.parseInt(piece.getLocation(1).substring(1));
+        int rowDirection = 0;
+        int colDirection = 0;
+
+
+        if(pieceX==x&&pieceY==y)
+            return false;
+
+        if (pieceX > x) {
+            colDirection = -1;
+        } else if (pieceX < x) {
+            colDirection = 1;
+        }
+        if (pieceY > y) {
+            rowDirection = 1;
+        } else if (pieceY < y) {
+            rowDirection = -1;
+        }
+
+        String move = "" + translateRow(y + rowDirection) + translateCol(x + colDirection);
+        if (validMove(piece, move)) {
+            return false;
+        }
+        else
+            return true;
     }
 
     private void takePiece(Piece piece, String move) {
+        int x = translateCol(move.substring(0, 1));
+        int y = translateRow(Integer.parseInt(move.substring(1)));
+        int pieceX = Integer.parseInt(piece.getLocation(1).substring(0, 1));
+        int pieceY = Integer.parseInt(piece.getLocation(1).substring(1));
+        int rowDirection = 0;
+        int colDirection = 0;
 
+        gameBoard[pieceY+y][pieceX+x] = piece;
+        gameBoard[pieceY][pieceX] = new Piece("Empty"," ");
     }
 
     private void promotion(Piece piece, String toPiece) {
 
-
     }
 
-    private void enPassant(String movement) {
-
-    }
-
-    private void castle(String movement) {
-
+    private boolean inCheck(){
+        return true;
     }
 
     public Piece searchForPiece(String name, String color, String move) {
-        Piece piece = new Piece(name, color);
         int row = 0;
         int col = 0;
-
-        for (int i = 0; i < gameBoard.length; i++) {
-            for (int j = 0; j < gameBoard[i].length; j++) {
-                if (validMove(piece, move)) {
-                    row = i;
-                    col = j;
-                }
-            }
-        }
         if (name.length() > 1) {
             try {
                 row = translateRow(Integer.parseInt(name.substring(1, 2)));
             } catch (NumberFormatException | NullPointerException nfe) {
-                col = translateCol(name.substring(1,2));
+                col = translateCol(name.substring(1, 2));
             }
         }
-        piece.setLocation(row, col);
-        return piece;
+        for (int i = row; i < gameBoard.length; i++) {
+            for (int j = col; j < gameBoard[i].length; j++) {
+                //System.out.println("Piece : " + i + j);
+                //System.out.println(gameBoard[i][j].getColor().equals(color));
+                //System.out.println(gameBoard[i][j].translateName().equals(name.substring(0,1)));
+                //System.out.println(validMove(gameBoard[i][j], move));
+                if (gameBoard[i][j].getColor().equals(color)&&gameBoard[i][j].translateName().equals(name.substring(0,1))&&validMove(gameBoard[i][j], move)) {
+                    System.out.println("valid");
+                    row = i;
+                    col = j;
+                    return gameBoard[row][col];
+                }
+            }
+        }
+        return new Piece("Empty", " ");
     }
 
     public Piece[][] getGameBoard() {
         return gameBoard;
     }
+
     public String toString() {
         String output = "";
         String pieceName = "";
@@ -213,14 +354,13 @@ public class Board {
         for (Piece[] i : gameBoard) {
             output += j + " ";
             for (Piece h : i) {
-                if (!h.getName().equals("Empty")) {
-                    if (translateColor(h.getColor())) {
-                        colorH = "W";
-                    } else {
-                        colorH = "B";
-                    }
-                } else
+                if (translateColor(h.getColor())) {
+                    colorH = "W";
+                } else if (h.getName().equals("Empty")) {
                     colorH = "";
+                } else if (!translateColor(h.getColor())) {
+                    colorH = "B";
+                }
                 pieceName = colorH + h.getName();
                 while (pieceName.length() < 8) {
                     pieceName += " ";
@@ -233,4 +373,11 @@ public class Board {
         output += "     A      B       C       D       E       F       G      H";
         return output;
     }
+
+    public Piece getPiece(String location){
+        int row = Integer.parseInt(location.substring(0,1));
+        int col = Integer.parseInt(location.substring(1));
+        return gameBoard[row][col];
+    }
+
 }

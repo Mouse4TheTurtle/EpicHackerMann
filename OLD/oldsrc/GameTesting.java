@@ -1,10 +1,10 @@
-package src;
+package oldsrc;
 
 public class GameTesting {
     public static void main(String[] args) {
 
         Board gamer = new Board();
-        DataTransfer data = new DataTransfer(null,null);
+        temprename data = new temprename(null,null);
         //BoardSituation situation = new BoardSituation();
         //Piece temp = new Empty();
         //temp.setLocation(7,0);

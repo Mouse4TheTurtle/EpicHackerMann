@@ -1,4 +1,4 @@
-package src;
+package oldsrc;
 
 import java.util.ArrayList;
 
@@ -10,7 +10,7 @@ abstract class Piece {
     private int pieceCol;
     private int pieceRow;
     private ArrayList<BoardSituation> valuedSituations = new ArrayList<BoardSituation>();
-    DataTransfer data = new DataTransfer(null, null);
+    temprename data = new temprename(null, null);
 
     public Movement[] pieceMovement() {
         return movements;
