@@ -22,10 +22,12 @@ public class BishopValue {
                 if (game.getGameBoard()[i][j].getName().equals("Bishop") &&
                         game.getGameBoard()[i][j].getColor().equals("Black")) {
                     if ((i == 1 && j == 1) || (i == 1 && j == 6)) {
-                        blackBishopPlacementValue1 = +0.3;
+                        blackBishopPlacementValue1 =+ 0.3;
+                    //finchettoed bish
                     }
                     if ((i == 3 && j == 2) || (i == 3 && j == 5)) {
-                        blackBishopPlacementValue2 = +0.1;
+                        blackBishopPlacementValue2 =+ 0.1;
+                    // bish centered
                     }
                 }
             }
@@ -41,9 +43,11 @@ public class BishopValue {
                         game.getGameBoard()[i][j].getColor().equals("White")) {
                     if ((i == 6 && j == 1) || (i == 6 && j == 6)) {
                         whiteBishopPlacementValue1 = +0.3;
+                        //finchettoed bish
                     }
                     if ((i == 4 && j == 2) || (i == 4 && j == 5)) {
                         whiteBishopPlacementValue2 = +0.1;
+                        // bish centered
                     }
                 }
             }

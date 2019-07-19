@@ -15,8 +15,8 @@ public class Engine {
         double whiteValue = 0;
         double blackValue = 0;
 
-    gameBoard1 = new Piece[8][8];
-    gameBoard2 = new Piece[8][8];
+    gameBoard1 = new Board;
+    gameBoard2 = new Board;
     gameBoard3 = new Piece[8][8];
     gameBoard4 = new Piece[8][8];
     gameBoard5 = new Piece[8][8];
@@ -24,6 +24,7 @@ public class Engine {
     gameBoard7 = new Piece[8][8];
     gameBoard8 = new Piece[8][8];
 
-    game.getGameBoard()= gameBoard1;
+    game = gameBoard1;
+
     }
 }
