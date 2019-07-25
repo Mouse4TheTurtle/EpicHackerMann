@@ -54,7 +54,6 @@ public class Board {
             for (int b = 0; b < 8; b++) {
                 gameBoard[i][b] = new Piece("Empty", " ");
                 gameBoard[i][b].setLocation(i, b);
-
             }
         }
 
@@ -324,14 +323,16 @@ public class Board {
                 //System.out.println(i.equals(move));
                 //System.out.println("h" + !translateColor(getPiece(""+moveToX+moveToY).getColor()));
                 //System.out.println("h" + getPiece(""+moveToX+moveToY).getName().equals("Empty"));
-                if (translateColor(getPiece("" + moveToX + moveToY).getColor()) != turn || getPiece("" + moveToX + moveToY).getName().equals("Empty")) {
-                    System.out.println("Valid Move");
-                    return true;
-                } else {
-                    System.out.println("invalid move");
-                    return false;
+                System.out.print(move);
+                if(blockedMove(piece,move)) {
+                    if (translateColor(getPiece("" + moveToX + moveToY).getColor()) != turn || getPiece("" + moveToX + moveToY).getName().equals("Empty")) {
+                        System.out.println("Valid Move");
+                        return true;
+                    } else {
+                        System.out.println("invalid move");
+                        return false;
+                    }
                 }
-
             }
         }
         return false;
@@ -344,8 +345,8 @@ public class Board {
         }
         int x = translateCol(movement.substring(0, 1));
         int y = translateRow(Integer.parseInt(movement.substring(1)));
-        int pieceX = Integer.parseInt(piece.getLocation(1).substring(0, 1));
-        int pieceY = Integer.parseInt(piece.getLocation(1).substring(1));
+        int pieceX = Integer.parseInt(piece.getLocation(1).substring(1));
+        int pieceY = Integer.parseInt(piece.getLocation(1).substring(0,1));
         int rowDirection = 0;
         int colDirection = 0;
 
@@ -364,7 +365,9 @@ public class Board {
             rowDirection = -1;
         }
 
-        String move = "" + translateRow(y + rowDirection) + translateCol(x + colDirection);
+        String move = "" + translateCol(x + colDirection) + translateRow(y + rowDirection);
+
+        System.out.print(move);
         if (validMove(piece, move)) {
             System.out.println("valid move h");
             return false;

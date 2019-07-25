@@ -7,6 +7,10 @@ public class GameTesting {
         Scanner keyboard = new Scanner(System.in);
         System.out.println("Begin game? ");
         String input = keyboard.nextLine();
+        for (int i = 0; i < game.getGameBoard()[7][1].getPossibleMoves().length; i++) {
+            System.out.println(game.getGameBoard()[7][1].getPossibleMoves()[i]);
+        }
+
         if(input.toLowerCase().equals("yes")) {
             while(!input.toLowerCase().equals("end")) {
                 System.out.println(game);
