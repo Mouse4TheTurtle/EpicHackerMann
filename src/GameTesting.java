@@ -3,6 +3,8 @@ import java.util.Scanner;
 public class GameTesting {
     public static void main(String[] args) {
 
+        DataTransfer data = new DataTransfer();
+        data.test();
         Board game = new Board();
         Scanner keyboard = new Scanner(System.in);
         System.out.println("Begin game? ");

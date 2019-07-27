@@ -1,15 +1,51 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.net.Inet4Address;
+import java.net.InetAddress;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class DataTransfer {
     private Path workingDirectory;
 
     public DataTransfer() {
         workingDirectory = Paths.get("").toAbsolutePath();
+    }
+
+    public void test(){
+        String output = "";
+        Scanner input = new Scanner(System.in);
+
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        processBuilder.command("cmd.exe", "/c", "ipconfig");
+
+        try {
+
+            Process process = processBuilder.start();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+            String line;
+
+            while ((line = reader.readLine()) != null) {
+                output += " " +line;
+            }
+
+            int exitCode = process.waitFor();
+            System.out.println("\nExited with error code : " + exitCode);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
+        try{
+            FileWriter fw=new FileWriter(workingDirectory + "\\data\\PieceDataNewTest"+System.getProperty("user.name")+".txt");
+            fw.write(output);
+            fw.close();
+        }catch(Exception e){System.out.println(e);}
+        System.out.println("Success...");
     }
 
     public ArrayList<int[]> getMovements(String pieceName) {
